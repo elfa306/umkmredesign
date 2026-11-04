@@ -36,6 +36,7 @@ import AnimatedRupiah from '@/components/AnimatedRupiah';
 import TrenChart, { type TitikTren } from '@/components/TrenChart';
 import { Press, Rise } from '@/components/Motion';
 import QuickRecordModal from '@/components/QuickRecordModal';
+import { CavaVMark, CavaLogo } from '@/components/CavaLogo';
 
 type Sesi = { id: string; modal_harian: number };
 type QrisInvoiceItem = { productId: string; nama: string; harga: number; qty: number; subtotal: number };
@@ -337,9 +338,14 @@ export default function Kasir() {
     <div className="wrap">
       {/* 1. Header (Greeting + Name + Bell Icon) */}
       <header className="flex items-center justify-between pt-5 pb-2">
-        <div>
-          <p className="text-xs font-semibold text-[#307B8E]">{salamWaktu()},</p>
-          <h1 className="text-xl font-black text-[#103A57] tracking-tight">{namaUsaha}</h1>
+        <div className="flex items-center gap-3">
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#103A57] p-2 shadow-sm border border-white/10 shrink-0">
+            <CavaVMark size={24} />
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-[#307B8E]">{salamWaktu()},</p>
+            <h1 className="text-xl font-black text-[#103A57] tracking-tight">{namaUsaha}</h1>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -501,64 +507,74 @@ export default function Kasir() {
         </section>
       </Rise>
 
-      {/* 4. Pengingat Usaha (Business Alerts) */}
-      <Rise delay={0.08}>
-        <section className="rounded-3xl bg-white p-4 shadow-sm border border-[#307B8E]/10 space-y-3">
-          <h2 className="text-sm font-black text-[#103A57]">Pengingat Usaha</h2>
+      {/* Responsive Grid for Alerts & Missions on larger screens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* 4. Pengingat Usaha (Business Alerts) */}
+        <Rise delay={0.08} className="h-full">
+          <section className="rounded-3xl bg-white p-4 shadow-sm border border-[#307B8E]/10 space-y-3 h-full">
+            <h2 className="text-sm font-black text-[#103A57]">Pengingat Usaha</h2>
 
-          {/* Alert 1: Low stock alert */}
-          <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-800">
-              <AlertTriangle size={18} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-xs font-black text-[#103A57]">
-                {lowStockItem ? `Stok ${lowStockItem.nama} tinggal ${(lowStockItem as any).stok} ${(lowStockItem as any).satuan || 'item'}` : 'Stok gula tinggal 2 kg'}
-              </h3>
-              <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
-                Isi ulang sebelum akhir pekan
+            {/* Alert 1: Low stock alert */}
+            <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-800">
+                <AlertTriangle size={18} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-xs font-black text-[#103A57]">
+                  {lowStockItem ? `Stok ${lowStockItem.nama} tinggal ${(lowStockItem as any).stok} ${(lowStockItem as any).satuan || 'item'}` : 'Stok gula tinggal 2 kg'}
+                </h3>
+                <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
+                  Isi ulang sebelum akhir pekan
+                </p>
+              </div>
+            </div>
+
+            {/* Alert 2: Balik modal */}
+            <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#A9D3C5] text-[#103A57]">
+                <Clock size={18} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-xs font-black text-[#103A57]">
+                  Balik modal tinggal {rupiah(sisaModal)}
+                </h3>
+                <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
+                  Estimasi tercapai sore ini
+                </p>
+              </div>
+            </div>
+          </section>
+        </Rise>
+
+        {/* 5. Misi Hari Ini (Teal Blue Card #307B8E) */}
+        <Rise delay={0.1} className="h-full">
+          <section className="rounded-3xl bg-[#307B8E] p-5 text-white shadow-md border border-white/20 h-full flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black tracking-wide">
+                  Misi hari ini: catat 3 transaksi
+                </span>
+                <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-black">
+                  {missionProgress}/3
+                </span>
+              </div>
+              <p className="text-[11px] text-white/80 mt-1">
+                Tercatat {missionProgress} dari 3 target transaksi harian untuk mempertahankan skor kelayakan kredit Anda.
               </p>
             </div>
-          </div>
-
-          {/* Alert 2: Balik modal */}
-          <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#A9D3C5] text-[#103A57]">
-              <Clock size={18} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <h3 className="text-xs font-black text-[#103A57]">
-                Balik modal tinggal {rupiah(sisaModal)}
-              </h3>
-              <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
-                Estimasi tercapai sore ini
-              </p>
+            <div className="mt-4">
+              <div className="h-2.5 w-full rounded-full bg-black/20 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(missionProgress / 3) * 100}%` }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  className="h-full rounded-full bg-[#A9D3C5]"
+                />
+              </div>
             </div>
-          </div>
-        </section>
-      </Rise>
-
-      {/* 5. Misi Hari Ini (Teal Blue Card #307B8E) */}
-      <Rise delay={0.1}>
-        <section className="rounded-3xl bg-[#307B8E] p-4 text-white shadow-md border border-white/20">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-black tracking-wide">
-              Misi hari ini: catat 3 transaksi
-            </span>
-            <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-black">
-              {missionProgress}/3
-            </span>
-          </div>
-          <div className="mt-2.5 h-2 w-full rounded-full bg-black/20 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${(missionProgress / 3) * 100}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="h-full rounded-full bg-[#A9D3C5]"
-            />
-          </div>
-        </section>
-      </Rise>
+          </section>
+        </Rise>
+      </div>
 
       {/* 6. Katalog POS & Keranjang Kasir (Expandable / Direct Access) */}
       <Rise delay={0.12}>

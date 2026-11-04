@@ -46,8 +46,9 @@ a {
   text-decoration: none;
 }
 
-/* Base Mobile-first App Wrapper with Desktop Centering */
+/* Base Mobile-first App Wrapper with Desktop Sidebar Support */
 .wrap {
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   padding: 0 16px calc(112px + env(safe-area-inset-bottom));
@@ -56,9 +57,37 @@ a {
   align-content: start;
 }
 
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 1020px;
+    margin-left: 270px;
+    margin-right: auto;
+    padding: 28px 36px 64px 36px;
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrap {
+    max-width: 1200px;
+    margin-left: 280px;
+    padding: 36px 48px 80px 48px;
+  }
+}
+
 .header-app {
   padding: calc(24px + env(safe-area-inset-top)) 0 4px;
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .header-app {
+    text-align: left;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 }
 
 .header-app h1 {

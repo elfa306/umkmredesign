@@ -37,26 +37,30 @@ export default function CavaSplash() {
           {/* Top spacer */}
           <div className="pt-12" />
 
-          {/* Centered Brand Presentation matching Splash PDF */}
+          {/* Centered Brand Presentation matching Splash PDF exactly */}
           <motion.div
             initial={{ scale: 0.82, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
             className="flex flex-col items-center"
           >
-            {/* Big V Emblem */}
-            <div className="mb-4">
-              <svg width={110} height={110} viewBox="0 0 100 100" fill="none">
-                <polygon points="30,22 70,22 50,42" fill="#A9D3C5" />
-                <path d="M20,24 L38,24 L50,68 L62,24 L80,24 L56,82 C53.5,87 46.5,87 44,82 Z" fill="#307B8E" />
-              </svg>
+            {/* Big V Emblem exact from Splash.pdf */}
+            <div className="mb-6">
+              <img
+                src="/cava-v-exact.png"
+                alt="CAVA V Emblem"
+                width={140}
+                height={140}
+                className="w-32 h-32 sm:w-36 sm:h-36 object-contain drop-shadow-xl"
+                draggable={false}
+              />
             </div>
 
             <motion.h1
-              initial={{ letterSpacing: '0.1em', opacity: 0 }}
-              animate={{ letterSpacing: '0.3em', opacity: 1 }}
+              initial={{ letterSpacing: '0.15em', opacity: 0 }}
+              animate={{ letterSpacing: '0.35em', opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-4xl font-black text-white ml-2"
+              className="text-4xl sm:text-5xl font-black text-white ml-2 tracking-[0.35em]"
             >
               CAVA
             </motion.h1>
@@ -65,7 +69,7 @@ export default function CavaSplash() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 0.9, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="mt-3 text-xs font-bold tracking-[0.35em] text-[#A9D3C5] uppercase"
+              className="mt-3 text-xs sm:text-sm font-bold tracking-[0.35em] text-[#CEE5D6] uppercase"
             >
               Cash Value
             </motion.p>

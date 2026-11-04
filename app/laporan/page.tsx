@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Download, FileSpreadsheet, FileText, Search, TrendingUp, TrendingDown, Clock, ShieldCheck, ChevronDown } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { fetchHari, type Hari } from '@/lib/data';
-import { PALET, rupiah, rupiahTanda, summarize, tglPendek } from '@/lib/accounting';
+import { PALET, rupiah, rupiahTanda, summarize, tglPendek, todayISO } from '@/lib/accounting';
 import { exportExcel, exportExcelPeriode } from '@/lib/exportExcel';
 import { exportPdf } from '@/lib/exportPdf';
 import { ISTILAH } from '@/lib/istilah';
@@ -42,7 +42,35 @@ export default function Laporan() {
 
   const load = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { router.replace('/login'); return; }
+    if (!user) {
+      setNama('[Nama Usaha]');
+      setLoading(false);
+      const iso = todayISO();
+      const sampleHari: Hari[] = [
+        {
+          id: 'sample-h1',
+          tanggal: iso,
+          modal: 340000,
+          txs: [
+            { id: 'sample-t1', jenis: 'penjualan', keterangan: 'Kopi Cava Latte', jumlah: 240000, metode: 'qris', qty: 12, created_at: `${iso}T08:30:00Z` },
+            { id: 'sample-t2', jenis: 'penjualan', keterangan: 'Roti Bakar Kaya', jumlah: 170000, metode: 'tunai', qty: 10, created_at: `${iso}T09:15:00Z` },
+            { id: 'sample-t3', jenis: 'biaya', keterangan: 'Beli Es Batu & Kantong', jumlah: 65000, metode: 'tunai', qty: 1, created_at: `${iso}T10:00:00Z` },
+            { id: 'sample-t4', jenis: 'biaya', keterangan: 'Bahan Baku Susu & Kopi', jumlah: 100000, metode: 'qris', qty: 1, created_at: `${iso}T11:20:00Z` },
+          ],
+        },
+        {
+          id: 'sample-h2',
+          tanggal: new Date(Date.now() - 86400000).toISOString().slice(0, 10),
+          modal: 300000,
+          txs: [
+            { id: 'sample-t5', jenis: 'penjualan', keterangan: 'Kopi Cava Latte', jumlah: 320000, metode: 'qris', qty: 16, created_at: `${iso}T14:00:00Z` },
+            { id: 'sample-t6', jenis: 'biaya', keterangan: 'Listrik & Gas Portabel', jumlah: 90000, metode: 'tunai', qty: 1, created_at: `${iso}T16:00:00Z` },
+          ],
+        },
+      ];
+      setHari(sampleHari);
+      return;
+    }
     setNama(user.user_metadata?.nama_usaha ?? 'Usaha Saya');
     setLoading(true);
     try {
@@ -52,7 +80,7 @@ export default function Laporan() {
       setErr((e as Error).message);
     }
     setLoading(false);
-  }, [periode, router]);
+  }, [periode]);
 
   useEffect(() => {
     load();
