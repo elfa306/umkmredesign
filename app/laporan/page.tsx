@@ -437,7 +437,7 @@ export default function Laporan() {
         <button
           type="button"
           onClick={cetakPdf}
-          className="w-full rounded-2xl bg-white border border-[#307B8E]/20 py-3.5 px-4 text-xs font-extrabold text-[#103A57] shadow-sm hover:bg-slate-50 transition flex items-center justify-center gap-2"
+          className="w-full rounded-2xl bg-white border border-[#307B8E]/20 py-3.5 px-4 text-xs font-extrabold text-[#103A57] shadow-sm hover:bg-[#CEE5D6]/35 transition flex items-center justify-center gap-2"
         >
           <FileText size={16} /> Unduh Laporan PDF
         </button>
