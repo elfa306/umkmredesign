@@ -542,7 +542,7 @@ export default function Kasir() {
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="text-xs font-black text-[#103A57]">
-                  Balik modal tinggal {rupiah(sisaModal)}
+                  {modalHarian > 0 ? `Balik modal tinggal ${rupiah(sisaModal)}` : 'Sesi harian belum dimulai'}
                 </h3>
                 <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
                   {modalHarian > 0 ? 'Pantau perubahan berdasarkan transaksi hari ini.' : 'Mulai sesi harian untuk menetapkan modal usaha.'}
