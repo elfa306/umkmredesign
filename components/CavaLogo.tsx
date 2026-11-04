@@ -20,7 +20,7 @@ export function CavaVMark({ size, height, className = '', light = false }: CavaV
 
   return (
     <img
-      src="/cava-v-exact.png"
+      src={light ? "/cava-v-exact.png" : "/cava-v-exact-dark.png"}
       alt="CAVA V Emblem"
       width={numDim}
       height={numDim}
@@ -100,7 +100,7 @@ export function CavaLogo({
     <div className={`inline-flex flex-col items-start select-none ${className}`}>
       <div className="flex items-center">
         <img
-          src="/cava-logo-exact.png"
+          src={light ? "/cava-logo-exact.png" : "/cava-logo-exact-dark.png"}
           alt="CAVA"
           height={logoHeight}
           className="object-contain"

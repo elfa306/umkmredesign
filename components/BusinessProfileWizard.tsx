@@ -7,6 +7,7 @@ import {
   ShoppingBasket, Store,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { CavaLogo } from '@/components/CavaLogo';
 import { todayISO } from '@/lib/accounting';
 import BottomNav from '@/components/BottomNav';
 
@@ -260,67 +261,67 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
   }
 
   if (loading) {
-    return <main className="min-h-screen bg-slate-50 px-4 py-12"><div className="mx-auto max-w-xl text-center text-sm text-slate-500">Memuat profil usaha…</div></main>;
+    return <main className="min-h-screen bg-[#CEE5D6] px-4 py-12"><div className="mx-auto max-w-xl text-center text-sm text-[#486577]">Memuat profil usaha…</div></main>;
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-6 pb-12">
+    <main className="min-h-screen bg-[#CEE5D6] px-4 py-6 pb-12">
       <div className="mx-auto grid max-w-2xl gap-5">
         <header className="flex items-start justify-between gap-3">
           <div>
-            <p className="m-0 text-xs font-bold uppercase tracking-[.16em] text-emerald-700">UMKM BERDAMPAK</p>
-            <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900">{editMode ? 'Pengaturan usaha' : 'Kenali usaha Anda'}</h1>
-            <p className="mt-1 max-w-xl text-sm leading-relaxed text-slate-600">
+            <div className="mb-2"><CavaLogo variant="horizontal" height={30} /></div>
+            <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#103A57]">{editMode ? 'Pengaturan usaha' : 'Kenali usaha Anda'}</h1>
+            <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#486577]">
               {editMode ? 'Perbarui informasi usaha dan metode pencatatan pembayaran.' : 'Lengkapi profil singkat agar pencatatan dan analisis usaha disesuaikan dengan kebutuhan bisnis Anda.'}
             </p>
           </div>
-          {editMode && <button type="button" onClick={() => router.push('/lainnya')} className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600">Kembali</button>}
+          {editMode && <button type="button" onClick={() => router.push('/lainnya')} className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-2 text-xs font-bold text-[#486577]">Kembali</button>}
         </header>
 
         {!editMode && (
-          <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-3 text-sm text-emerald-900">
+          <div className="rounded-2xl border border-[#307B8E]/15 bg-[#CEE5D6]/45 p-3 text-sm text-[#103A57]">
             <b>Satu kali pengaturan.</b> Data ini tersimpan khusus untuk akun Anda. Anda dapat mengubahnya kapan saja melalui menu Pengaturan Usaha.
           </div>
         )}
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <section className="rounded-2xl border border-[#307B8E]/15 bg-white p-4 shadow-sm sm:p-6">
           <div className="mb-5 grid grid-cols-3 gap-2">
             {steps.map((label, i) => (
               <div key={label} className="grid gap-2">
-                <div className={`h-1.5 rounded-full ${i <= step ? 'bg-emerald-500' : 'bg-slate-100'}`} />
-                <span className={`text-[11px] font-bold ${i === step ? 'text-emerald-700' : 'text-slate-400'}`}>{i + 1}. {label}</span>
+                <div className={`h-1.5 rounded-full ${i <= step ? 'bg-[#CEE5D6]/450' : 'bg-[#CEE5D6]/60'}`} />
+                <span className={`text-[11px] font-bold ${i === step ? 'text-[#307B8E]' : 'text-[#486577]/65'}`}>{i + 1}. {label}</span>
               </div>
             ))}
           </div>
 
           {error && <div role="alert" className="mb-4 rounded-xl border border-red-100 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
-          {notice && <div role="status" className="mb-4 rounded-xl border border-emerald-100 bg-emerald-50 p-3 text-sm text-emerald-800">{notice}</div>}
+          {notice && <div role="status" className="mb-4 rounded-xl border border-[#307B8E]/15 bg-[#CEE5D6]/45 p-3 text-sm text-[#366B2B]">{notice}</div>}
 
           <form onSubmit={simpan} className="grid gap-5">
             {step === 0 && (
               <div className="grid gap-4">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900">Profil dasar usaha</h2>
-                  <p className="text-sm text-slate-500">Informasi dasar yang juga digunakan pada laporan dan rekomendasi modal.</p>
+                  <h2 className="text-lg font-extrabold text-[#103A57]">Profil dasar usaha</h2>
+                  <p className="text-sm text-[#486577]">Informasi dasar yang juga digunakan pada laporan dan rekomendasi modal.</p>
                 </div>
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Nama usaha
-                  <input value={form.nama_usaha} onChange={(e) => ubah('nama_usaha', e.target.value)} required maxLength={100} placeholder="Contoh: Warung Makan Berkah" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500" />
+                  <input value={form.nama_usaha} onChange={(e) => ubah('nama_usaha', e.target.value)} required maxLength={100} placeholder="Contoh: Warung Makan Berkah" className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]" />
                 </label>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                  <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                     Mulai menjalankan usaha
-                    <input type="date" max={todayISO()} value={form.tanggal_mulai_usaha} onChange={(e) => ubah('tanggal_mulai_usaha', e.target.value)} required className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500" />
+                    <input type="date" max={todayISO()} value={form.tanggal_mulai_usaha} onChange={(e) => ubah('tanggal_mulai_usaha', e.target.value)} required className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]" />
                   </label>
-                  <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                  <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                     Hari operasional per bulan
-                    <input type="number" min={1} max={31} step={1} value={form.hari_buka_per_bulan} onChange={(e) => ubah('hari_buka_per_bulan', e.target.value)} required className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500" />
+                    <input type="number" min={1} max={31} step={1} value={form.hari_buka_per_bulan} onChange={(e) => ubah('hari_buka_per_bulan', e.target.value)} required className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]" />
                   </label>
                 </div>
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Perkiraan kebutuhan modal (Rp)
-                  <input type="number" min={1} step={1} inputMode="numeric" value={form.kebutuhan_modal} onChange={(e) => ubah('kebutuhan_modal', e.target.value)} required placeholder="Contoh: 5000000" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500" />
-                  <span className="text-xs font-normal text-slate-500">Masukkan angka bulat tanpa titik atau simbol rupiah.</span>
+                  <input type="number" min={1} step={1} inputMode="numeric" value={form.kebutuhan_modal} onChange={(e) => ubah('kebutuhan_modal', e.target.value)} required placeholder="Contoh: 5000000" className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]" />
+                  <span className="text-xs font-normal text-[#486577]">Masukkan angka bulat tanpa titik atau simbol rupiah.</span>
                 </label>
               </div>
             )}
@@ -328,46 +329,46 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
             {step === 1 && (
               <div className="grid gap-4">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900">Karakteristik usaha</h2>
-                  <p className="text-sm text-slate-500">Jenis aktivitas bisnis menentukan cara pencatatan stok dan biaya.</p>
+                  <h2 className="text-lg font-extrabold text-[#103A57]">Karakteristik usaha</h2>
+                  <p className="text-sm text-[#486577]">Jenis aktivitas bisnis menentukan cara pencatatan stok dan biaya.</p>
                 </div>
                 <fieldset className="grid gap-2">
-                  <legend className="mb-1 text-sm font-semibold text-slate-700">Jenis usaha</legend>
+                  <legend className="mb-1 text-sm font-semibold text-[#103A57]">Jenis usaha</legend>
                   <div className="grid gap-2 sm:grid-cols-2">
                     {JENIS.map((item) => {
                       const Icon = item.ikon;
                       const selected = form.jenis_usaha === item.id;
                       return (
                         <button key={item.id} type="button" onClick={() => setForm((old) => ({ ...old, jenis_usaha: item.id, memiliki_persediaan: item.id === 'jasa' ? 'tidak' : old.memiliki_persediaan || 'ya' }))}
-                          className={`rounded-xl border p-3 text-left transition ${selected ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-200' : 'border-slate-200 bg-white hover:border-slate-300'}`} aria-pressed={selected}>
-                          <div className="flex items-center gap-2"><Icon size={19} className={selected ? 'text-emerald-700' : 'text-slate-500'} /><span className="text-sm font-bold text-slate-800">{item.nama}</span>{selected && <Check size={16} className="ml-auto text-emerald-700" />}</div>
-                          <p className="mb-0 mt-1 text-xs leading-relaxed text-slate-500">{item.contoh}</p>
+                          className={`rounded-xl border p-3 text-left transition ${selected ? 'border-[#307B8E] bg-[#CEE5D6]/45 ring-1 ring-[#A9D3C5]/55' : 'border-[#307B8E]/15 bg-white hover:border-[#307B8E]/25'}`} aria-pressed={selected}>
+                          <div className="flex items-center gap-2"><Icon size={19} className={selected ? 'text-[#307B8E]' : 'text-[#486577]'} /><span className="text-sm font-bold text-[#103A57]">{item.nama}</span>{selected && <Check size={16} className="ml-auto text-[#307B8E]" />}</div>
+                          <p className="mb-0 mt-1 text-xs leading-relaxed text-[#486577]">{item.contoh}</p>
                         </button>
                       );
                     })}
                   </div>
                 </fieldset>
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Bentuk usaha
-                  <select value={form.bentuk_usaha} onChange={(e) => ubah('bentuk_usaha', e.target.value as BentukUsaha)} className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500">
+                  <select value={form.bentuk_usaha} onChange={(e) => ubah('bentuk_usaha', e.target.value as BentukUsaha)} className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]">
                     <option value="">Pilih bentuk usaha</option>
                     {BENTUK.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
                   </select>
-                  <span className="text-xs font-normal text-slate-500">Pilih bentuk yang paling sesuai dengan kondisi usaha Anda.</span>
+                  <span className="text-xs font-normal text-[#486577]">Pilih bentuk yang paling sesuai dengan kondisi usaha Anda.</span>
                 </label>
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Bidang usaha
-                  <input value={form.bidang_usaha} onChange={(e) => ubah('bidang_usaha', e.target.value)} maxLength={100} required placeholder="Contoh: sembako, makanan ringan, konveksi" className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500" />
+                  <input value={form.bidang_usaha} onChange={(e) => ubah('bidang_usaha', e.target.value)} maxLength={100} required placeholder="Contoh: sembako, makanan ringan, konveksi" className="rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E]" />
                 </label>
                 <fieldset className="grid gap-2">
-                  <legend className="text-sm font-semibold text-slate-700">Apakah usaha memiliki persediaan barang?</legend>
+                  <legend className="text-sm font-semibold text-[#103A57]">Apakah usaha memiliki persediaan barang?</legend>
                   <div className="grid grid-cols-2 gap-2">
                     {([{ value: 'ya', label: 'Ya, memiliki stok' }, { value: 'tidak', label: 'Tidak ada stok' }] as const).map((item) => (
                       <button key={item.value} type="button" onClick={() => ubah('memiliki_persediaan', item.value)} aria-pressed={form.memiliki_persediaan === item.value}
-                        className={`rounded-xl border p-3 text-sm font-semibold ${form.memiliki_persediaan === item.value ? 'border-emerald-500 bg-emerald-50 text-emerald-800' : 'border-slate-200 bg-white text-slate-600'}`}>{item.label}</button>
+                        className={`rounded-xl border p-3 text-sm font-semibold ${form.memiliki_persediaan === item.value ? 'border-[#307B8E] bg-[#CEE5D6]/45 text-[#366B2B]' : 'border-[#307B8E]/15 bg-white text-[#486577]'}`}>{item.label}</button>
                     ))}
                   </div>
-                  {form.jenis_usaha === 'jasa' && <p className="m-0 text-xs text-slate-500">Usaha jasa biasanya dapat memilih tidak memiliki persediaan, tetapi Anda tetap bisa mengaktifkan stok jika menyediakan barang.</p>}
+                  {form.jenis_usaha === 'jasa' && <p className="m-0 text-xs text-[#486577]">Usaha jasa biasanya dapat memilih tidak memiliki persediaan, tetapi Anda tetap bisa mengaktifkan stok jika menyediakan barang.</p>}
                 </fieldset>
               </div>
             )}
@@ -375,18 +376,18 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
             {step === 2 && (
               <div className="grid gap-4">
                 <div>
-                  <h2 className="text-lg font-extrabold text-slate-900">Metode pencatatan pembayaran</h2>
-                  <p className="text-sm text-slate-500">Pilih metode yang paling sesuai. Pengaturan ini dapat diubah kemudian.</p>
+                  <h2 className="text-lg font-extrabold text-[#103A57]">Metode pencatatan pembayaran</h2>
+                  <p className="text-sm text-[#486577]">Pilih metode yang paling sesuai. Pengaturan ini dapat diubah kemudian.</p>
                 </div>
                 <div className="grid gap-2">
                   {PEMBAYARAN.map((item) => {
                     const active = form.metode_pembayaran === item.value;
                     return (
                       <button key={item.value} type="button" onClick={() => ubah('metode_pembayaran', item.value)} aria-pressed={active}
-                        className={`rounded-xl border p-3 text-left transition ${active ? 'border-emerald-500 bg-emerald-50 ring-1 ring-emerald-200' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
-                        <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-bold text-slate-800">{item.title}</span>{active && <Check size={16} className="text-emerald-700" />}</div>
-                        <p className="mb-1 mt-1 text-xs leading-relaxed text-slate-500">{item.description}</p>
-                        <span className="inline-flex rounded-full bg-slate-100 px-2 py-1 text-[10px] font-bold text-slate-600">{item.tag}</span>
+                        className={`rounded-xl border p-3 text-left transition ${active ? 'border-[#307B8E] bg-[#CEE5D6]/45 ring-1 ring-[#A9D3C5]/55' : 'border-[#307B8E]/15 bg-white hover:border-[#307B8E]/25'}`}>
+                        <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-bold text-[#103A57]">{item.title}</span>{active && <Check size={16} className="text-[#307B8E]" />}</div>
+                        <p className="mb-1 mt-1 text-xs leading-relaxed text-[#486577]">{item.description}</p>
+                        <span className="inline-flex rounded-full bg-[#CEE5D6]/60 px-2 py-1 text-[10px] font-bold text-[#486577]">{item.tag}</span>
                       </button>
                     );
                   })}
@@ -397,17 +398,17 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
               </div>
             )}
 
-            <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-4">
+            <div className="flex items-center justify-between gap-2 border-t border-[#307B8E]/10 pt-4">
               <button type="button" disabled={step === 0 || saving} onClick={() => { setError(''); setStep((s) => Math.max(0, s - 1)); }}
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-600 disabled:opacity-40">
+                className="inline-flex items-center gap-2 rounded-xl border border-[#307B8E]/15 bg-white px-4 py-3 text-sm font-bold text-[#486577] disabled:opacity-40">
                 <ArrowLeft size={16}/> Kembali
               </button>
               {step < 2 ? (
-                <button type="button" onClick={lanjut} className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-bold text-white">
+                <button type="button" onClick={lanjut} className="inline-flex items-center gap-2 rounded-xl bg-[#103A57] px-5 py-3 text-sm font-bold text-white">
                   Lanjut <ArrowRight size={16}/>
                 </button>
               ) : (
-                <button type="submit" disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white disabled:opacity-50">
+                <button type="submit" disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-[#103A57] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">
                   {saving ? 'Menyimpan…' : editMode ? 'Simpan perubahan' : 'Selesaikan pengaturan'} <Check size={16}/>
                 </button>
               )}
@@ -415,11 +416,11 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
           </form>
         </section>
 
-        <div className="flex items-start gap-2 rounded-xl bg-slate-100 p-3 text-xs leading-relaxed text-slate-600">
+        <div className="flex items-start gap-2 rounded-xl bg-[#CEE5D6]/60 p-3 text-xs leading-relaxed text-[#486577]">
           <CircleHelp size={17} className="mt-0.5 shrink-0" />
-          <p className="m-0">Informasi ini dipakai untuk menyesuaikan fitur UMKM Berdampak. Pilihan bentuk usaha bukan pemeriksaan legalitas dan metode pembayaran tidak mengaktifkan layanan pihak ketiga secara otomatis.</p>
+          <p className="m-0">Informasi ini dipakai untuk menyesuaikan fitur CAVA. Pilihan bentuk usaha bukan pemeriksaan legalitas dan metode pembayaran tidak mengaktifkan layanan pihak ketiga secara otomatis.</p>
         </div>
-        {!editMode && <p className="m-0 text-center text-xs text-slate-400">Profil dapat diperbarui kapan saja melalui menu Pengaturan Usaha.</p>}
+        {!editMode && <p className="m-0 text-center text-xs text-[#486577]/65">Profil dapat diperbarui kapan saja melalui menu Pengaturan Usaha.</p>}
         {editMode && <BottomNav />}
       </div>
     </main>

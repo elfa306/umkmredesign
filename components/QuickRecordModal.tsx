@@ -288,7 +288,7 @@ export default function QuickRecordModal({
                   key={key}
                   type="button"
                   onClick={() => handleNumpad(key)}
-                  className="h-11 rounded-xl bg-white font-extrabold text-base text-[#103A57] shadow-sm hover:bg-slate-50 active:scale-95 transition flex items-center justify-center border border-[#307B8E]/10"
+                  className="h-11 rounded-xl bg-white font-extrabold text-base text-[#103A57] shadow-sm hover:bg-[#CEE5D6]/35 active:scale-95 transition flex items-center justify-center border border-[#307B8E]/10"
                 >
                   {key === 'back' ? <Delete size={18} className="text-[#991B1B]" /> : key}
                 </button>
