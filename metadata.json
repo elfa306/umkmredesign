@@ -1,7 +1,7 @@
 {
-  "name": "UMKM Berdampak",
-  "description": "Aplikasi kasir, manajemen inventaris, pembukuan keuangan, dan simulasi pembiayaan untuk UMKM.",
-  "prompt": "UMKM Berdampak",
+  "name": "CAVA - Cash Value",
+  "description": "Platform pencatatan kas, modal, balik modal, dan nilai kesiapan kredit usaha.",
+  "prompt": "CAVA - Cash Value",
   "capabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
   ]
