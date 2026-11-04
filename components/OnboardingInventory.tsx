@@ -10,7 +10,7 @@ type Baris = { key: number; nama: string; satuan: string; harga: string; jumlah:
 const barisBaru = (key: number): Baris => ({ key, nama: '', satuan: 'pcs', harga: '', jumlah: '', tersimpan: false });
 const kosong = (b: Baris) => !b.nama.trim() && !b.harga && !b.jumlah;
 const digit = (v: string) => v.replace(/\D/g, '');
-const input = 'rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm outline-none focus:border-emerald-500 disabled:bg-slate-50 disabled:text-slate-500';
+const input = 'rounded-xl border border-[#307B8E]/15 bg-white px-3 py-3 text-sm outline-none focus:border-[#307B8E] disabled:bg-[#CEE5D6] disabled:text-[#486577]';
 
 const PESAN_RPC: Record<string, string> = {
   invalid_product_name: 'Nama produk harus 2 sampai 100 karakter.',
@@ -114,48 +114,48 @@ export default function OnboardingInventory() {
   }
 
   if (loading) {
-    return <main className="min-h-screen bg-slate-50 px-4 py-12"><div className="mx-auto max-w-xl text-center text-sm text-slate-500">{error || 'Menyiapkan inventaris…'}</div></main>;
+    return <main className="min-h-screen bg-[#CEE5D6] px-4 py-12"><div className="mx-auto max-w-xl text-center text-sm text-[#486577]">{error || 'Menyiapkan inventaris…'}</div></main>;
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-6 pb-12">
+    <main className="min-h-screen bg-[#CEE5D6] px-4 py-6 pb-12">
       <div className="mx-auto grid max-w-2xl gap-5">
         <header>
-          <p className="m-0 text-xs font-bold uppercase tracking-[.16em] text-emerald-700">UMKM BERDAMPAK</p>
-          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-slate-900">Isi inventaris awal</h1>
-          <p className="mt-1 max-w-xl text-sm leading-relaxed text-slate-600">
+          <p className="m-0 text-xs font-bold uppercase tracking-[.16em] text-[#307B8E]">UMKM BERDAMPAK</p>
+          <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#103A57]">Isi inventaris awal</h1>
+          <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#486577]">
             {punyaStok
               ? 'Masukkan produk yang Anda jual beserta jumlah stok saat ini. Produk ini langsung muncul di Kasir, dan stoknya berkurang otomatis setiap ada penjualan.'
               : 'Masukkan layanan atau produk yang Anda jual beserta harganya. Semuanya langsung muncul di Kasir.'}
           </p>
         </header>
 
-        <form onSubmit={simpan} className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <form onSubmit={simpan} className="grid gap-4 rounded-2xl border border-[#307B8E]/15 bg-white p-4 shadow-sm sm:p-6">
           {error && <div role="alert" className="rounded-xl border border-red-100 bg-red-50 p-3 text-sm text-red-700">{error}</div>}
 
           {baris.map((b, i) => (
-            <fieldset key={b.key} disabled={b.tersimpan || saving} className="grid gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
-              <legend className="flex items-center gap-2 px-1 text-xs font-bold text-slate-600">
-                Produk #{i + 1}{b.tersimpan && <span className="inline-flex items-center gap-1 text-emerald-700"><Check size={13} /> tersimpan</span>}
+            <fieldset key={b.key} disabled={b.tersimpan || saving} className="grid gap-3 rounded-xl border border-[#307B8E]/10 bg-[#CEE5D6] p-3">
+              <legend className="flex items-center gap-2 px-1 text-xs font-bold text-[#486577]">
+                Produk #{i + 1}{b.tersimpan && <span className="inline-flex items-center gap-1 text-[#307B8E]"><Check size={13} /> tersimpan</span>}
               </legend>
-              <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+              <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                 Nama produk
                 <input value={b.nama} onChange={(e) => ubah(b.key, { nama: e.target.value })} maxLength={100} placeholder="Contoh: Bakwan" className={input} />
               </label>
               <div className={`grid gap-3 ${punyaStok ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Harga jual (Rp)
                   <input value={b.harga} onChange={(e) => ubah(b.key, { harga: digit(e.target.value) })} inputMode="numeric" placeholder="Contoh: 2000" className={input} />
                 </label>
                 {punyaStok && (
-                  <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                  <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                     Jumlah stok
                     <input value={b.jumlah} onChange={(e) => ubah(b.key, { jumlah: e.target.value.replace(',', '.').replace(/[^\d.]/g, '') })} inputMode="decimal" placeholder="Contoh: 50" className={input} />
                   </label>
                 )}
               </div>
               {punyaStok && (
-                <label className="grid gap-1.5 text-sm font-semibold text-slate-700">
+                <label className="grid gap-1.5 text-sm font-semibold text-[#103A57]">
                   Satuan
                   <input value={b.satuan} onChange={(e) => ubah(b.key, { satuan: e.target.value })} maxLength={20} placeholder="pcs, porsi, bungkus, kg" className={input} />
                 </label>
@@ -169,15 +169,15 @@ export default function OnboardingInventory() {
           ))}
 
           <button type="button" disabled={saving || baris.length >= 20} onClick={() => { setBaris((old) => [...old, barisBaru(urut)]); setUrut((n) => n + 1); }}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-dashed border-emerald-300 px-4 py-3 text-sm font-bold text-emerald-800 disabled:opacity-50">
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-dashed border-[#A9D3C5] px-4 py-3 text-sm font-bold text-[#366B2B] disabled:opacity-50">
             <Plus size={16} /> Tambah produk lain
           </button>
 
-          <div className="grid gap-2 border-t border-slate-100 pt-4">
-            <button type="submit" disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white disabled:opacity-50">
+          <div className="grid gap-2 border-t border-[#307B8E]/10 pt-4">
+            <button type="submit" disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#103A57] px-5 py-3 text-sm font-bold text-white disabled:opacity-50">
               <PackagePlus size={16} /> {saving ? 'Menyimpan…' : 'Simpan dan mulai berjualan'}
             </button>
-            <button type="button" disabled={saving} onClick={() => router.replace('/kasir')} className="text-xs font-semibold text-slate-500 underline disabled:opacity-50">
+            <button type="button" disabled={saving} onClick={() => router.replace('/kasir')} className="text-xs font-semibold text-[#486577] underline disabled:opacity-50">
               Lewati dulu, isi nanti lewat menu Inventaris
             </button>
           </div>
