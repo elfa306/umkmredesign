@@ -29,8 +29,8 @@ const JENIS: Record<string, { nama: string; deskripsi: string; fokus: string }> 
 };
 
 export const metadata: Metadata = {
-  title: 'Persiapan Interactive Demo | UMKM Berdampak',
-  description: 'Ringkasan pilihan pengalaman demonstrasi UMKM Berdampak.',
+  title: 'Persiapan Interactive Demo | CAVA',
+  description: 'Ringkasan pilihan pengalaman demonstrasi CAVA.',
 };
 
 export default async function DemoPreparationPage({ searchParams }: { searchParams: SearchParams }) {
@@ -59,7 +59,7 @@ export default async function DemoPreparationPage({ searchParams }: { searchPara
           <div className="bg-gradient-to-br from-[#103A57] to-[#307B8E] px-6 py-7 text-white sm:px-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-extrabold tracking-wide text-[#CEE5D6]">DEMO MODE · TAHAP PERSIAPAN</div>
             <h1 className="mt-4 text-2xl font-black tracking-tight sm:text-3xl">Pilihan demonstrasimu sudah siap.</h1>
-            <p className="mt-2 text-sm leading-6 text-white/85">Berikut konfigurasi pengalaman yang kamu pilih untuk UMKM Berdampak.</p>
+            <p className="mt-2 text-sm leading-6 text-white/85">Berikut konfigurasi pengalaman yang kamu pilih untuk usaha Anda.</p>
           </div>
           <div className="grid gap-5 p-6 sm:p-8">
             <div className="grid gap-3 sm:grid-cols-2">
