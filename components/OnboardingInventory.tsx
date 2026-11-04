@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, PackagePlus, Plus, Trash2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { CavaLogo } from '@/components/CavaLogo';
 
 type Baris = { key: number; nama: string; satuan: string; harga: string; jumlah: string; tersimpan: boolean };
 
@@ -121,7 +122,7 @@ export default function OnboardingInventory() {
     <main className="min-h-screen bg-[#CEE5D6] px-4 py-6 pb-12">
       <div className="mx-auto grid max-w-2xl gap-5">
         <header>
-          <p className="m-0 text-xs font-bold uppercase tracking-[.16em] text-[#307B8E]">UMKM BERDAMPAK</p>
+          <div className="mb-2"><CavaLogo variant="horizontal" height={29} /></div>
           <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-[#103A57]">Isi inventaris awal</h1>
           <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#486577]">
             {punyaStok
