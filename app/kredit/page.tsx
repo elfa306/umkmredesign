@@ -9,10 +9,8 @@ import {
   CheckCircle2,
   Circle,
   Download,
-  FileText,
   Info,
   TrendingUp,
-  UserRound,
   Wallet,
 } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
@@ -396,7 +394,7 @@ export default function NilaiUsahaPage() {
           type="button"
           onClick={handleDownloadPdf}
           disabled={downloading || loading || !nilai.loggedIn}
-          className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#103A57] px-5 py-4 text-xs font-extrabold text-white shadow-lg shadow-[#103A57]/15 transition hover:bg-[#174968] disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#103A57] px-5 py-4 text-xs font-extrabold text-white shadow-lg shadow-[#103A57]/15 transition hover:bg-[#174968] disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Download size={17} />
           {downloading ? 'Menyiapkan PDF…' : 'Unduh rapor usaha'}
