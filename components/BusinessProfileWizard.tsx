@@ -418,7 +418,7 @@ export default function BusinessProfileWizard({ mode = 'onboarding' }: Props) {
 
         <div className="flex items-start gap-2 rounded-xl bg-[#CEE5D6]/60 p-3 text-xs leading-relaxed text-[#486577]">
           <CircleHelp size={17} className="mt-0.5 shrink-0" />
-          <p className="m-0">Informasi ini dipakai untuk menyesuaikan fitur UMKM Berdampak. Pilihan bentuk usaha bukan pemeriksaan legalitas dan metode pembayaran tidak mengaktifkan layanan pihak ketiga secara otomatis.</p>
+          <p className="m-0">Informasi ini dipakai untuk menyesuaikan fitur CAVA. Pilihan bentuk usaha bukan pemeriksaan legalitas dan metode pembayaran tidak mengaktifkan layanan pihak ketiga secara otomatis.</p>
         </div>
         {!editMode && <p className="m-0 text-center text-xs text-[#486577]/65">Profil dapat diperbarui kapan saja melalui menu Pengaturan Usaha.</p>}
         {editMode && <BottomNav />}
