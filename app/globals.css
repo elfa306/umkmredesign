@@ -537,3 +537,69 @@ input:focus, select:focus {
 .btn-main, .btn-soft, .btn-sm, .btn-pill {
   touch-action: manipulation;
 }
+
+/* CAVA brand palette supplied in bahan.zip: scope-sensitive form controls. */
+input.auth-input {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 48px 0 46px !important;
+  border: 1px solid rgba(48, 123, 142, 0.22);
+  border-radius: 15px;
+  background: #f8fbfa;
+  color: #103A57;
+  font: 600 13px/1.35 'Plus Jakarta Sans', system-ui, sans-serif;
+  box-shadow: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+input.auth-input::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+  opacity: 1;
+}
+
+input.auth-input:focus {
+  outline: none;
+  border-color: #307B8E;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(48, 123, 142, 0.12);
+}
+
+input.auth-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input.loan-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 6px;
+  min-height: 6px;
+  padding: 0 !important;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #307B8E 0%, #A9D3C5 100%);
+  cursor: pointer;
+}
+
+input.loan-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: #103A57;
+  box-shadow: 0 1px 6px rgba(16, 58, 87, 0.24);
+}
+
+input.loan-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: #103A57;
+  box-shadow: 0 1px 6px rgba(16, 58, 87, 0.24);
+}
+

@@ -296,22 +296,21 @@ export default function Kasir() {
     });
   }
 
-  // Summary calculations
-  // Default values matching user's reference design if zero or new session:
-  // Masuk: 410.000, Keluar: 165.000 -> Untung: 245.000. Modal: 340.000 -> Balik 72%, kurang 95.000
-  const liveSummary = sesi ? summarize(sesi.modal_harian, txs) : null;
-  const untungBersih = liveSummary && (liveSummary.pendapatan > 0 || liveSummary.beban > 0)
-    ? liveSummary.labaBersih
-    : 245000;
-  const totalMasuk = liveSummary && liveSummary.pendapatan > 0 ? liveSummary.pendapatan : 410000;
-  const totalKeluar = liveSummary && liveSummary.beban > 0 ? liveSummary.beban : 165000;
-  const modalHarian = sesi && sesi.modal_harian > 0 ? sesi.modal_harian : 340000;
-  // 72% balik modal · kurang Rp 95.000
-  const sisaModal = Math.max(0, modalHarian - (totalMasuk - totalKeluar));
-  const persenBalik = modalHarian > 0 ? Math.min(100, Math.max(0, Math.round(((modalHarian - sisaModal) / modalHarian) * 100))) : 72;
+  // Ringkasan memakai catatan aktual. Tidak ada angka contoh yang ditampilkan sebagai data usaha.
+  const modalHarian = sesi?.modal_harian ?? 0;
+  const liveSummary = summarize(modalHarian, txs);
+  const untungBersih = liveSummary.labaBersih;
+  const totalMasuk = liveSummary.pendapatan;
+  const totalKeluar = liveSummary.beban;
+  const sisaModal = modalHarian > 0
+    ? Math.max(0, modalHarian - (totalMasuk - totalKeluar))
+    : 0;
+  const persenBalik = modalHarian > 0
+    ? Math.min(100, Math.max(0, Math.round(((modalHarian - sisaModal) / modalHarian) * 100)))
+    : 0;
 
-  // Mission progress: Catat 3 transaksi hari ini
-  const missionProgress = Math.min(3, txs.length > 0 ? txs.length : 2);
+  // Progres misi dihitung dari transaksi yang benar-benar tercatat hari ini.
+  const missionProgress = Math.min(3, txs.length);
 
   // Check low stock
   const lowStockItem = products.find((p) => typeof (p as any).stok === 'number' && (p as any).stok <= ((p as any).stok_minimum || 5));
@@ -337,14 +336,15 @@ export default function Kasir() {
   return (
     <div className="wrap">
       {/* 1. Header (Greeting + Name + Bell Icon) */}
-      <header className="flex items-center justify-between pt-5 pb-2">
-        <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#103A57] p-2 shadow-sm border border-white/10 shrink-0">
-            <CavaVMark size={24} />
+      <header className="flex items-center justify-between gap-3 pt-5 pb-2">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white p-2 shadow-sm ring-1 ring-[#307B8E]/10">
+            <CavaVMark size={30} />
           </div>
-          <div>
-            <p className="text-xs font-semibold text-[#307B8E]">{salamWaktu()},</p>
-            <h1 className="text-xl font-black text-[#103A57] tracking-tight">{namaUsaha}</h1>
+          <div className="min-w-0">
+            <CavaLogo variant="horizontal" height={20} />
+            <p className="mt-1 text-[11px] font-semibold text-[#307B8E]">{salamWaktu()},</p>
+            <h1 className="truncate text-lg font-black tracking-tight text-[#103A57]">{namaUsaha}</h1>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -413,7 +413,9 @@ export default function Kasir() {
               />
             </div>
             <p className="mt-2 text-xs font-bold text-white/90">
-              {persenBalik}% balik modal · kurang {rupiah(sisaModal)}
+              {modalHarian > 0
+                ? `${persenBalik}% balik modal · kurang ${rupiah(sisaModal)}`
+                : 'Isi modal harian untuk mulai menghitung progres balik modal.'}
             </p>
           </div>
 
@@ -521,10 +523,14 @@ export default function Kasir() {
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="text-xs font-black text-[#103A57]">
-                  {lowStockItem ? `Stok ${lowStockItem.nama} tinggal ${(lowStockItem as any).stok} ${(lowStockItem as any).satuan || 'item'}` : 'Stok gula tinggal 2 kg'}
+                  {lowStockItem
+                    ? `Stok ${lowStockItem.nama} tinggal ${(lowStockItem as any).stok} ${(lowStockItem as any).satuan || 'item'}`
+                    : products.length > 0 ? 'Tidak ada stok kritis' : 'Data stok belum tersedia'}
                 </h3>
                 <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
-                  Isi ulang sebelum akhir pekan
+                  {lowStockItem
+                    ? 'Periksa persediaan dan rencanakan pengisian ulang.'
+                    : products.length > 0 ? 'Persediaan berada di atas batas minimum.' : 'Tambahkan produk melalui menu Inventaris.'}
                 </p>
               </div>
             </div>
@@ -536,10 +542,10 @@ export default function Kasir() {
               </span>
               <div className="min-w-0 flex-1">
                 <h3 className="text-xs font-black text-[#103A57]">
-                  Balik modal tinggal {rupiah(sisaModal)}
+                  {modalHarian > 0 ? `Balik modal tinggal ${rupiah(sisaModal)}` : 'Sesi harian belum dimulai'}
                 </h3>
                 <p className="mt-0.5 text-[11px] font-semibold text-[#307B8E]">
-                  Estimasi tercapai sore ini
+                  {modalHarian > 0 ? 'Pantau perubahan berdasarkan transaksi hari ini.' : 'Mulai sesi harian untuk menetapkan modal usaha.'}
                 </p>
               </div>
             </div>
