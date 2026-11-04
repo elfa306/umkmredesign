@@ -1,0 +1,8 @@
+{
+  "name": "UMKM Berdampak",
+  "description": "Aplikasi kasir, manajemen inventaris, pembukuan keuangan, dan simulasi pembiayaan untuk UMKM.",
+  "prompt": "UMKM Berdampak",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
