@@ -227,7 +227,7 @@ export default function InteractiveDemoPage() {
               type="button"
               onClick={lanjutkan}
               disabled={!jenisUsaha}
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#103A57] px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-emerald-600/20 transition hover:bg-[#307B8E] disabled:cursor-not-allowed disabled:bg-[#A9D3C5] disabled:shadow-none"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#103A57] px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#103A57]/20 transition hover:bg-[#307B8E] disabled:cursor-not-allowed disabled:bg-[#A9D3C5] disabled:shadow-none"
             >
               Siapkan demonstrasi <ArrowRight size={17} />
             </button>
