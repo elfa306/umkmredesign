@@ -57,7 +57,7 @@ export default function BottomNav() {
         * 1. MOBILE BOTTOM NAVIGATION (Hidden on lg: screens and above)
         * =================================================================== */}
       <nav
-        className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white/95 backdrop-blur-md border-t border-[#307B8E]/15 rounded-t-[28px] px-3 pt-2 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-8px_25px_rgba(16,58,87,0.08)] z-50 flex items-center justify-around"
+        className="cava-mobile-nav lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[520px] bg-white border-t border-[#307B8E]/15 rounded-t-[24px] px-3 pt-2 pb-[calc(10px+env(safe-area-inset-bottom))] shadow-[0_-10px_30px_rgba(16,58,87,0.10)] z-50 flex items-center justify-around"
         data-html2canvas-ignore
       >
         {/* 1. Beranda */}
@@ -133,7 +133,7 @@ export default function BottomNav() {
         * 2. DESKTOP SIDEBAR (Visible on lg: screens and above)
         * =================================================================== */}
       <aside
-        className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-[#103A57] text-white z-40 p-5 flex-col justify-between border-r border-white/10 shadow-2xl"
+        className="cava-desktop-sidebar hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-[#103A57] text-white z-40 p-5 flex-col justify-between border-r border-white/10 shadow-xl"
         data-html2canvas-ignore
       >
         <div className="space-y-6">
