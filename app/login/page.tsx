@@ -40,6 +40,8 @@ export default function Login() {
         return;
       }
       setCheckingSession(false);
+    }).catch(() => {
+      if (aktif) setCheckingSession(false);
     });
 
     return () => {
