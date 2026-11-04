@@ -309,7 +309,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={proses}
-                className="inline-flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-[#103A57] px-5 py-3.5 text-xs font-extrabold text-white shadow-lg shadow-[#103A57]/15 transition hover:bg-[#174968] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#307B8E]/25 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-[#103A57] px-5 py-3.5 text-xs font-extrabold text-white shadow-lg shadow-[#103A57]/15 transition hover:bg-[#174968] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#307B8E]/25 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {proses ? 'Memproses…' : mode === 'daftar' ? 'Buat akun' : mode === 'lupa' ? 'Kirim tautan pemulihan' : 'Masuk ke CAVA'}
                 {!proses && <ArrowRight size={15} />}
