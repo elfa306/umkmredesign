@@ -533,7 +533,7 @@ export default function InventoryManager() {
         </div>
       )}
       {notice && (
-        <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+        <div className="p-3.5 rounded-2xl bg-[#CEE5D6]/45 border border-[#307B8E]/20 text-[#366B2B] text-xs font-semibold flex items-center gap-2">
           <CheckCircle2 size={16} className="text-[#366B2B]" />
           <span>{notice}</span>
         </div>
@@ -605,7 +605,7 @@ export default function InventoryManager() {
           className={`py-2.5 rounded-xl text-xs font-black transition-all ${
             tab === 'products'
               ? 'bg-[#103A57] text-white shadow-sm'
-              : 'text-slate-600 hover:text-[#103A57]'
+              : 'text-[#486577] hover:text-[#103A57]'
           }`}
         >
           Katalog Produk &amp; Stok ({products.length})
@@ -619,7 +619,7 @@ export default function InventoryManager() {
           className={`py-2.5 rounded-xl text-xs font-black transition-all ${
             tab === 'movements'
               ? 'bg-[#103A57] text-white shadow-sm'
-              : 'text-slate-600 hover:text-[#103A57]'
+              : 'text-[#486577] hover:text-[#103A57]'
           }`}
         >
           Riwayat Mutasi Stok ({movements.length})
@@ -637,13 +637,13 @@ export default function InventoryManager() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Cari nama produk, SKU, atau kategori…"
-                className="w-full rounded-2xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                className="w-full rounded-2xl border border-[#307B8E]/15 bg-white py-2.5 pl-10 pr-4 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#486577]"
                 >
                   <X size={14} />
                 </button>
@@ -658,7 +658,7 @@ export default function InventoryManager() {
                   className={`px-3 py-2 rounded-xl text-[11px] font-bold whitespace-nowrap transition ${
                     filterCategory === 'all'
                       ? 'bg-[#103A57] text-white'
-                      : 'bg-white text-slate-600 border border-slate-200'
+                      : 'bg-white text-[#486577] border border-[#307B8E]/15'
                   }`}
                 >
                   Semua ({products.length})
@@ -671,7 +671,7 @@ export default function InventoryManager() {
                     className={`px-3 py-2 rounded-xl text-[11px] font-bold whitespace-nowrap transition ${
                       filterCategory === cat
                         ? 'bg-[#103A57] text-white'
-                        : 'bg-white text-slate-600 border border-slate-200'
+                        : 'bg-white text-[#486577] border border-[#307B8E]/15'
                     }`}
                   >
                     {cat}
@@ -700,7 +700,7 @@ export default function InventoryManager() {
                           {p.nama}
                         </h3>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 shrink-0">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-[#486577] shrink-0">
                         {ITEM_LABEL[p.jenis_item] || p.jenis_item}
                       </span>
                     </div>
@@ -712,7 +712,7 @@ export default function InventoryManager() {
                       </div>
                       <div>
                         <span className="text-[10px] text-slate-400 block font-semibold">HPP (Modal)</span>
-                        <span className="font-semibold text-slate-600">{rupiah(p.harga_pokok)}</span>
+                        <span className="font-semibold text-[#486577]">{rupiah(p.harga_pokok)}</span>
                       </div>
                     </div>
 
@@ -768,7 +768,7 @@ export default function InventoryManager() {
             })}
 
             {!visible.length && (
-              <div className="col-span-full rounded-3xl bg-white p-8 text-center text-slate-500 space-y-3 border border-slate-200">
+              <div className="col-span-full rounded-3xl bg-white p-8 text-center text-slate-500 space-y-3 border border-[#307B8E]/15">
                 <Package size={36} className="mx-auto text-slate-300" />
                 <p className="text-xs">
                   {search
@@ -841,7 +841,7 @@ export default function InventoryManager() {
       )}
 
       {/* Information Banner */}
-      <div className="rounded-2xl bg-white/70 p-4 border border-[#307B8E]/15 flex items-start gap-3 text-xs text-slate-600">
+      <div className="rounded-2xl bg-white/70 p-4 border border-[#307B8E]/15 flex items-start gap-3 text-xs text-[#486577]">
         <ShieldCheck size={18} className="text-[#366B2B] shrink-0 mt-0.5" />
         <p className="leading-relaxed">
           Mutasi persediaan terhubung langsung dengan penghitungan <b>HPP (Harga Pokok Penjualan)</b> pada laporan laba rugi bulanan dan mencegah stok negatif secara otomatis.
@@ -864,7 +864,7 @@ export default function InventoryManager() {
               <button
                 type="button"
                 onClick={() => setShowProduct(false)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-600"
+                className="p-1 rounded-full text-slate-400 hover:text-[#486577]"
               >
                 <X size={18} />
               </button>
@@ -878,7 +878,7 @@ export default function InventoryManager() {
                   value={productForm.nama}
                   onChange={(e) => setProductForm((v) => ({ ...v, nama: e.target.value }))}
                   placeholder="Contoh: Kopi Susu Aren"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -888,7 +888,7 @@ export default function InventoryManager() {
                   value={productForm.sku}
                   onChange={(e) => setProductForm((v) => ({ ...v, sku: e.target.value }))}
                   placeholder="Mis. KOP-01"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -898,7 +898,7 @@ export default function InventoryManager() {
                   value={productForm.kategori}
                   onChange={(e) => setProductForm((v) => ({ ...v, kategori: e.target.value }))}
                   placeholder="Mis. Minuman, Makanan"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -907,7 +907,7 @@ export default function InventoryManager() {
                 <select
                   value={productForm.jenis_item}
                   onChange={(e) => setProductForm((v) => ({ ...v, jenis_item: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 >
                   <option value="finished_good">Barang jadi (Siap Jual)</option>
                   <option value="merchandise">Barang dagangan / Retail</option>
@@ -922,7 +922,7 @@ export default function InventoryManager() {
                   value={productForm.satuan}
                   onChange={(e) => setProductForm((v) => ({ ...v, satuan: e.target.value }))}
                   placeholder="cup, porsi, kg, pcs"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -936,7 +936,7 @@ export default function InventoryManager() {
                   value={productForm.harga}
                   onChange={(e) => setProductForm((v) => ({ ...v, harga: e.target.value }))}
                   placeholder="18000"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -950,7 +950,7 @@ export default function InventoryManager() {
                   value={productForm.harga_pokok}
                   onChange={(e) => setProductForm((v) => ({ ...v, harga_pokok: e.target.value }))}
                   placeholder="8500"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -962,7 +962,7 @@ export default function InventoryManager() {
                   step="1"
                   value={productForm.stok}
                   onChange={(e) => setProductForm((v) => ({ ...v, stok: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
 
@@ -974,7 +974,7 @@ export default function InventoryManager() {
                   step="1"
                   value={productForm.stok_minimum}
                   onChange={(e) => setProductForm((v) => ({ ...v, stok_minimum: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
             </div>
@@ -983,7 +983,7 @@ export default function InventoryManager() {
               <button
                 type="button"
                 onClick={() => setShowProduct(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-[#307B8E]/15 text-xs font-bold text-[#486577] hover:bg-[#CEE5D6]/35"
               >
                 Batal
               </button>
@@ -1013,7 +1013,7 @@ export default function InventoryManager() {
               <button
                 type="button"
                 onClick={() => setShowAdjustmentModal(false)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-600"
+                className="p-1 rounded-full text-slate-400 hover:text-[#486577]"
               >
                 <X size={18} />
               </button>
@@ -1034,7 +1034,7 @@ export default function InventoryManager() {
                       unitCost: p ? String(p.harga_pokok || 0) : v.unitCost,
                     }));
                   }}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 >
                   <option value="">-- Pilih produk yang dimutasi --</option>
                   {stockable.map((p) => (
@@ -1050,7 +1050,7 @@ export default function InventoryManager() {
                 <select
                   value={adjustForm.movementType}
                   onChange={(e) => setAdjustForm((v) => ({ ...v, movementType: e.target.value }))}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 >
                   <option value="adjustment_in">Penyesuaian Masuk (+)</option>
                   <option value="purchase">Pembelian Stok Masuk (+)</option>
@@ -1071,7 +1071,7 @@ export default function InventoryManager() {
                     required
                     value={adjustForm.qty}
                     onChange={(e) => setAdjustForm((v) => ({ ...v, qty: e.target.value }))}
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                   />
                 </div>
                 <div className="space-y-1">
@@ -1082,7 +1082,7 @@ export default function InventoryManager() {
                     step="100"
                     value={adjustForm.unitCost}
                     onChange={(e) => setAdjustForm((v) => ({ ...v, unitCost: e.target.value }))}
-                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                    className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                   />
                 </div>
               </div>
@@ -1094,7 +1094,7 @@ export default function InventoryManager() {
                   value={adjustForm.note}
                   onChange={(e) => setAdjustForm((v) => ({ ...v, note: e.target.value }))}
                   placeholder="Mis. Stok opname akhir bulan / susu bocor"
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#307B8E]/15 bg-white text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#103A57]"
                 />
               </div>
             </div>
@@ -1103,7 +1103,7 @@ export default function InventoryManager() {
               <button
                 type="button"
                 onClick={() => setShowAdjustmentModal(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-[#307B8E]/15 text-xs font-bold text-[#486577] hover:bg-[#CEE5D6]/35"
               >
                 Batal
               </button>
@@ -1129,7 +1129,7 @@ export default function InventoryManager() {
               <Trash2 size={24} />
             </div>
             <div className="text-center space-y-1">
-              <h3 className="text-base font-black text-slate-900">
+              <h3 className="text-base font-black text-[#103A57]">
                 Hapus Produk {deleteTarget.nama}?
               </h3>
               <p className="text-xs text-slate-500 leading-relaxed">
@@ -1141,7 +1141,7 @@ export default function InventoryManager() {
                 type="button"
                 disabled={busy}
                 onClick={() => setDeleteTarget(null)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-[#307B8E]/15 text-xs font-bold text-[#486577] hover:bg-[#CEE5D6]/35"
               >
                 Batal
               </button>
