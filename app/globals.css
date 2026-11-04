@@ -603,3 +603,274 @@ input.loan-range::-moz-range-thumb {
   box-shadow: 0 1px 6px rgba(16, 58, 87, 0.24);
 }
 
+/* -------------------------------------------------------------------------
+   CAVA Mobile Banking Refresh
+   Clean surfaces, compact hierarchy, and accessible navigation.
+   ------------------------------------------------------------------------- */
+:root {
+  --cava-surface: #FFFFFF;
+  --cava-surface-soft: #F6FAF8;
+  --cava-line: rgba(16, 58, 87, 0.10);
+  --cava-shadow-soft: 0 8px 26px rgba(16, 58, 87, 0.055);
+  --cava-shadow-raised: 0 14px 34px rgba(16, 58, 87, 0.11);
+  --cava-radius-card: 22px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  background: var(--cava-bg);
+  color: var(--cava-prussian);
+  font-feature-settings: "ss01" on;
+}
+
+::selection {
+  color: var(--cava-prussian);
+  background: var(--cava-pastel);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(48, 123, 142, 0.42);
+  outline-offset: 3px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: calc(12px + env(safe-area-inset-top)) 16px calc(116px + env(safe-area-inset-bottom));
+  gap: 18px;
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    width: min(calc(100% - 300px), 1240px);
+    max-width: 1240px;
+    margin-left: 280px;
+    margin-right: 20px;
+    padding: 28px 34px 72px;
+    gap: 22px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrap {
+    width: min(calc(100% - 320px), 1320px);
+    max-width: 1320px;
+    margin-left: 300px;
+    padding: 34px 46px 80px;
+  }
+}
+
+/* Consistent page headings: left aligned like a financial dashboard. */
+.wrap > header,
+.wrap .header-app {
+  text-align: left;
+  padding-top: max(10px, env(safe-area-inset-top));
+}
+
+.wrap > header h1,
+.wrap .header-app h1 {
+  color: var(--cava-prussian);
+  letter-spacing: -0.045em;
+  line-height: 1.16;
+}
+
+.wrap > header p,
+.wrap .header-app p {
+  color: var(--cava-teal);
+}
+
+.header-app {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.glass-card {
+  border-radius: var(--cava-radius-card);
+  border: 1px solid var(--cava-line);
+  background: var(--cava-surface);
+  box-shadow: var(--cava-shadow-soft);
+  padding: 20px;
+}
+
+.balance-card {
+  border-radius: 26px;
+  text-align: left;
+  box-shadow: var(--cava-shadow-raised);
+}
+
+/* White panels on all existing screens share one quiet surface treatment. */
+.wrap .rounded-3xl.bg-white,
+.wrap .rounded-2xl.bg-white,
+.wrap .rounded-xl.bg-white {
+  border-color: var(--cava-line);
+  box-shadow: var(--cava-shadow-soft);
+}
+
+.wrap .rounded-3xl.bg-white {
+  border-radius: 22px;
+}
+
+.wrap .rounded-2xl.bg-white {
+  border-radius: 18px;
+}
+
+.wrap .rounded-xl.bg-white {
+  border-radius: 15px;
+}
+
+/* Controls remain the same controls; only their visual states are unified. */
+.btn-main,
+.wrap .btn-main {
+  border-radius: 16px;
+  background: var(--cava-prussian);
+  box-shadow: 0 8px 18px rgba(16, 58, 87, 0.14);
+}
+
+.btn-soft,
+.wrap .btn-soft {
+  border-radius: 15px;
+  background: #FFFFFF;
+  border: 1px solid var(--cava-line);
+}
+
+.btn-sm {
+  border-radius: 12px;
+}
+
+.filter-pills {
+  justify-content: flex-start;
+  padding-bottom: 2px;
+}
+
+.btn-pill {
+  border-radius: 999px;
+  border-color: rgba(48, 123, 142, 0.18);
+  padding: 9px 15px;
+}
+
+.btn-pill.active {
+  background: var(--cava-prussian);
+  color: #FFFFFF;
+}
+
+.toggle-stats {
+  border-radius: 15px;
+  border-color: var(--cava-line);
+  padding: 4px;
+}
+
+.toggle-stats button {
+  border-radius: 12px;
+  min-height: 42px;
+}
+
+.trx {
+  border-radius: 17px;
+  border-color: var(--cava-line);
+  box-shadow: none;
+}
+
+.mut {
+  padding: 13px 0;
+}
+
+.label {
+  letter-spacing: 0.045em;
+}
+
+/* Mobile navigation: white dock, soft active state, CAVA V remains the record action. */
+.cava-mobile-nav {
+  min-height: 70px;
+  border-color: rgba(16, 58, 87, 0.09);
+  box-shadow: 0 -10px 30px rgba(16, 58, 87, 0.10);
+}
+
+.cava-mobile-nav > a {
+  min-width: 58px;
+  border-radius: 15px;
+  padding: 7px 6px;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.cava-mobile-nav > a[class*="text-[#103A57]"] {
+  background: rgba(206, 229, 214, 0.58);
+}
+
+.cava-mobile-nav > a span {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.cava-mobile-nav button {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.cava-mobile-nav button:focus-visible {
+  outline-offset: 5px;
+}
+
+.cava-desktop-sidebar {
+  box-shadow: 12px 0 36px rgba(16, 58, 87, 0.08);
+}
+
+.cava-desktop-sidebar nav a {
+  min-height: 44px;
+  border-radius: 13px;
+}
+
+.cava-desktop-sidebar nav a span {
+  line-height: 1.35;
+}
+
+/* Cleaner login fields without changing input names, validation, or submit behavior. */
+input.auth-input {
+  min-height: 50px;
+  border-radius: 14px;
+  background: #F8FBFA;
+  border-color: rgba(48, 123, 142, 0.20);
+}
+
+input.auth-input:focus {
+  background: #FFFFFF;
+  border-color: var(--cava-teal);
+  box-shadow: 0 0 0 4px rgba(48, 123, 142, 0.11);
+}
+
+@media (max-width: 380px) {
+  .wrap {
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 15px;
+  }
+  .cava-mobile-nav {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+  .cava-mobile-nav > a {
+    min-width: 50px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
