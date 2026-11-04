@@ -13,8 +13,8 @@ import {
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 export const metadata = {
-  title: 'Dashboard Demonstrasi | UMKM Berdampak',
-  description: 'Dashboard usaha interaktif dalam lingkungan demonstrasi UMKM Berdampak.',
+  title: 'Dashboard Demonstrasi | CAVA',
+  description: 'Dashboard usaha interaktif dalam lingkungan demonstrasi CAVA.',
 };
 
 export default async function DemoRoomPage() {
