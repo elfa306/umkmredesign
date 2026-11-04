@@ -351,7 +351,7 @@ export default function Kasir() {
           <button
             type="button"
             onClick={gantiSuara}
-            className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-slate-50 transition"
+            className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-[#CEE5D6]/35 transition"
             aria-label="Toggle sound"
           >
             {suara ? <Volume2 size={18} className="text-[#103A57]" /> : <VolumeX size={18} className="text-slate-400" />}
@@ -359,7 +359,7 @@ export default function Kasir() {
           <button
             type="button"
             onClick={() => setShowNotifModal(true)}
-            className="relative grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-slate-50 transition"
+            className="relative grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-[#CEE5D6]/35 transition"
             aria-label="Notifikasi"
           >
             <Bell size={18} />
