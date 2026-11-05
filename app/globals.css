@@ -49,9 +49,37 @@ body {
   min-height: 100vh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+
+/* Reset dasar di layer "base" supaya class Tailwind (layer utilities) tetap bisa menimpanya.
+ * Tanpa reset ini, <button> tampil dengan garis dan latar abu bawaan browser, dan
+ * aturan "a { color: inherit }" di luar layer menimpa warna teks tombol berbentuk link. */
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
 }
 
 :focus-visible {
@@ -411,9 +439,12 @@ input:focus, select:focus {
 }
 
 .toggle-stats button.active {
-  background: #ffffff;
-  color: var(--cava-prussian);
-  box-shadow: 0 1px 3px rgba(16, 58, 87, 0.12);
+  background: var(--cava-prussian);
+  color: #ffffff;
+}
+
+.toggle-stats button:disabled {
+  opacity: 0.55;
 }
 
 /* ---------------------------------------------------------------------
@@ -707,4 +738,129 @@ input.loan-range::-moz-range-thumb {
   border-radius: 50%;
   background: #103A57;
   box-shadow: 0 1px 6px rgba(16, 58, 87, 0.24);
+}
+
+/* ---------------------------------------------------------------------
+ * Katalog kasir & keranjang QRIS
+ * ------------------------------------------------------------------- */
+.seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-ctl);
+  background: #E1EEE8;
+}
+
+.seg button {
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 11px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+
+.seg button.on {
+  background: var(--cava-prussian);
+  color: #ffffff;
+}
+
+.seg button:disabled {
+  opacity: 0.55;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 84px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--cava-page);
+  text-align: left;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.tile:hover:not(:disabled) {
+  background: var(--cava-tint);
+}
+
+.tile:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.tile:disabled {
+  opacity: 0.55;
+}
+
+.tile .tile-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--cava-prussian);
+}
+
+.tile .tile-price {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cava-teal);
+  font-variant-numeric: tabular-nums;
+}
+
+.tile .tile-qty {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--cava-prussian);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.qty-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--cava-tint);
+  color: var(--cava-prussian);
+  font-weight: 800;
+}
+
+.qty-btn:disabled {
+  opacity: 0.4;
+}
+
+.note {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #FEF3C7;
+  color: #78350F;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.note.ok {
+  background: rgba(54, 107, 43, 0.1);
+  color: var(--cava-green);
+}
+
+.btn-ghost {
+  width: 100%;
+  min-height: 44px;
+  border-radius: var(--r-ctl);
+  background: var(--cava-tint);
+  color: var(--cava-prussian);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.btn-ghost:disabled {
+  opacity: 0.45;
 }

@@ -149,66 +149,66 @@ export default function QuickRecordModal({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="relative w-full max-w-lg rounded-t-[32px] sm:rounded-[32px] bg-[#CEE5D6] p-5 sm:p-6 shadow-2xl border border-white/50 max-h-[92vh] flex flex-col overflow-y-auto"
+            className="relative w-full max-w-lg rounded-t-[28px] sm:rounded-[24px] bg-white p-5 sm:p-6 shadow-2xl max-h-[92vh] flex flex-col overflow-y-auto"
           >
             {/* Grab Bar Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#307B8E]/15">
+            <div className="flex items-center justify-between pb-3">
               <div className="flex items-center gap-2">
                 <CavaLogo variant="mark" size="sm" />
                 <div>
-                  <h2 className="text-base font-black tracking-tight text-[#103A57]">Catat Transaksi</h2>
-                  <p className="text-[11px] font-bold text-[#307B8E]">Pencatatan kas instan CAVA</p>
+                  <h2 className="text-base font-extrabold tracking-tight text-[#103A57]">Catat transaksi</h2>
+                  <p className="text-[11px] font-semibold text-[#4F6B7C]">Pencatatan kas instan</p>
                 </div>
               </div>
               <button
                 onClick={onClose}
-                className="grid h-8 w-8 place-items-center rounded-full bg-white/70 text-[#103A57] hover:bg-white transition"
+                className="grid h-9 w-9 place-items-center rounded-full bg-[#E3F0EA] text-[#103A57] hover:bg-[#CEE5D6] transition"
               >
                 <X size={18} />
               </button>
             </div>
 
             {/* Type Switcher: Masuk vs Keluar */}
-            <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl bg-white/70 p-1.5 shadow-sm border border-slate-200/40">
+            <div className="mt-3 grid grid-cols-2 gap-1 rounded-2xl bg-[#E1EEE8] p-1">
               <button
                 type="button"
                 onClick={() => setType('masuk')}
-                className={`flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-black transition-all ${
+                className={`flex min-h-[44px] items-center justify-center gap-2 rounded-xl text-xs font-extrabold transition-colors ${
                   type === 'masuk'
-                    ? 'bg-[#103A57] text-white shadow-md'
-                    : 'text-[#103A57]/70 hover:text-[#103A57]'
+                    ? 'bg-[#103A57] text-white'
+                    : 'text-[#4F6B7C] hover:text-[#103A57]'
                 }`}
               >
                 <ArrowDownLeft size={16} className={type === 'masuk' ? 'text-[#A9D3C5]' : ''} />
-                <span>UANG MASUK</span>
+                <span>Uang masuk</span>
               </button>
               <button
                 type="button"
                 onClick={() => setType('keluar')}
-                className={`flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-black transition-all ${
+                className={`flex min-h-[44px] items-center justify-center gap-2 rounded-xl text-xs font-extrabold transition-colors ${
                   type === 'keluar'
-                    ? 'bg-[#991B1B] text-white shadow-md'
-                    : 'text-[#103A57]/70 hover:text-[#103A57]'
+                    ? 'bg-[#991B1B] text-white'
+                    : 'text-[#4F6B7C] hover:text-[#103A57]'
                 }`}
               >
                 <ArrowUpRight size={16} className={type === 'keluar' ? 'text-[#CEE5D6]' : ''} />
-                <span>UANG KELUAR</span>
+                <span>Uang keluar</span>
               </button>
             </div>
 
             {/* Big Amount Display */}
-            <div className="mt-4 rounded-2xl bg-white p-4 text-center shadow-sm border border-[#307B8E]/10">
-              <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#307B8E]">
-                {type === 'masuk' ? 'Nominal Penjualan' : 'Nominal Pengeluaran'}
+            <div className="mt-3 rounded-2xl bg-[#EEF5F1] p-4 text-center">
+              <span className="text-xs font-bold text-[#4F6B7C]">
+                {type === 'masuk' ? 'Nominal penjualan' : 'Nominal pengeluaran'}
               </span>
               <div className="mt-1 flex items-baseline justify-center gap-1">
-                <span className={`text-3xl sm:text-4xl font-black tabular-nums tracking-tight ${
+                <span className={`text-3xl sm:text-4xl font-extrabold tabular-nums tracking-tight ${
                   type === 'masuk' ? 'text-[#103A57]' : 'text-[#991B1B]'
                 }`}>
                   {rupiah(nominalNumber)}
                 </span>
               </div>
-              <p className="mt-1 text-[11px] font-medium text-slate-500">
+              <p className="mt-1 text-[11px] font-semibold text-[#4F6B7C]">
                 {nominalNumber > 0 ? (type === 'masuk' ? 'Akan ditambahkan ke pemasukan hari ini' : 'Akan dicatat sebagai beban operasional') : 'Ketik angka pada tombol di bawah'}
               </p>
             </div>
@@ -220,7 +220,7 @@ export default function QuickRecordModal({
                   key={p}
                   type="button"
                   onClick={() => handlePreset(p)}
-                  className="rounded-xl border border-[#307B8E]/20 bg-white/80 px-2.5 py-1.5 text-[11px] font-extrabold text-[#103A57] hover:bg-white active:scale-95 transition shrink-0"
+                  className="rounded-full bg-[#E3F0EA] px-3.5 py-2 text-[11px] font-extrabold text-[#103A57] hover:bg-[#CEE5D6] active:scale-95 transition shrink-0"
                 >
                   +{p >= 1000 ? `${p / 1000}rb` : p}
                 </button>
@@ -229,16 +229,16 @@ export default function QuickRecordModal({
 
             {/* Method (Tunai vs QRIS for Masuk) or Category for Keluar */}
             {type === 'masuk' ? (
-              <div className="mt-3 flex items-center justify-between rounded-xl bg-white/60 px-3 py-2 border border-[#307B8E]/10">
-                <span className="text-xs font-bold text-[#103A57]">Metode Pembayaran:</span>
-                <div className="flex gap-1.5">
+              <div className="mt-3 flex items-center justify-between gap-3">
+                <span className="text-xs font-bold text-[#103A57]">Metode pembayaran</span>
+                <div className="grid grid-cols-2 gap-1 rounded-xl bg-[#E1EEE8] p-1">
                   <button
                     type="button"
                     onClick={() => setMetode('tunai')}
-                    className={`rounded-lg px-3 py-1 text-xs font-black transition ${
+                    className={`rounded-lg px-3.5 py-2 text-xs font-extrabold transition ${
                       metode === 'tunai'
                         ? 'bg-[#103A57] text-white'
-                        : 'bg-white text-[#103A57]/80'
+                        : 'text-[#4F6B7C]'
                     }`}
                   >
                     💵 Tunai
@@ -246,10 +246,10 @@ export default function QuickRecordModal({
                   <button
                     type="button"
                     onClick={() => setMetode('qris')}
-                    className={`rounded-lg px-3 py-1 text-xs font-black transition ${
+                    className={`rounded-lg px-3.5 py-2 text-xs font-extrabold transition ${
                       metode === 'qris'
-                        ? 'bg-[#307B8E] text-white'
-                        : 'bg-white text-[#103A57]/80'
+                        ? 'bg-[#103A57] text-white'
+                        : 'text-[#4F6B7C]'
                     }`}
                   >
                     📱 QRIS
@@ -261,7 +261,7 @@ export default function QuickRecordModal({
                 <select
                   value={kategoriBiaya}
                   onChange={(e) => setKategoriBiaya(e.target.value)}
-                  className="w-full rounded-xl border border-[#307B8E]/20 bg-white px-3 py-2 text-xs font-bold text-[#103A57]"
+                  className="w-full rounded-xl bg-white px-3 py-2.5 text-xs font-bold text-[#103A57]"
                 >
                   <option value="Belanja bahan baku">🛒 Belanja bahan baku / stok</option>
                   <option value="Operasional & utilitas">💡 Listrik / Air / Gas</option>
@@ -278,7 +278,7 @@ export default function QuickRecordModal({
               value={keterangan}
               onChange={(e) => setKeterangan(e.target.value)}
               placeholder={type === 'masuk' ? 'Catatan (opsional, mis. 2 Kopi Susu)' : 'Keterangan pengeluaran'}
-              className="mt-3 w-full rounded-xl border border-[#307B8E]/20 bg-white px-3 py-2.5 text-xs font-semibold text-[#103A57] placeholder:text-slate-400"
+              className="mt-3 w-full rounded-xl bg-white px-3 py-2.5 text-xs font-semibold text-[#103A57] placeholder:text-slate-400"
             />
 
             {/* Tactile Numpad */}
@@ -288,7 +288,7 @@ export default function QuickRecordModal({
                   key={key}
                   type="button"
                   onClick={() => handleNumpad(key)}
-                  className="h-11 rounded-xl bg-white font-extrabold text-base text-[#103A57] shadow-sm hover:bg-slate-50 active:scale-95 transition flex items-center justify-center border border-[#307B8E]/10"
+                  className="h-12 rounded-xl bg-[#EEF5F1] font-extrabold text-base text-[#103A57] hover:bg-[#E3F0EA] active:scale-95 transition flex items-center justify-center"
                 >
                   {key === 'back' ? <Delete size={18} className="text-[#991B1B]" /> : key}
                 </button>
@@ -301,7 +301,7 @@ export default function QuickRecordModal({
                 type="button"
                 disabled={nominalNumber <= 0 || loading}
                 onClick={handleSave}
-                className={`relative w-full rounded-2xl py-3.5 px-4 font-black text-sm tracking-wide text-white shadow-lg transition-all active:scale-[0.98] disabled:opacity-40 ${
+                className={`relative w-full rounded-2xl py-3.5 px-4 font-extrabold text-sm text-white transition-all active:scale-[0.98] disabled:opacity-40 ${
                   type === 'masuk'
                     ? 'bg-[#103A57] hover:bg-[#103A57]/90'
                     : 'bg-[#991B1B] hover:bg-[#991B1B]/90'
@@ -309,14 +309,14 @@ export default function QuickRecordModal({
               >
                 {savedSuccess ? (
                   <span className="flex items-center justify-center gap-2">
-                    <Check size={18} className="text-[#366B2B]" /> TERCATAT!
+                    <Check size={18} className="text-[#A9D3C5]" /> Tercatat
                   </span>
                 ) : loading ? (
                   'Menyimpan transaksi…'
                 ) : (
                   <span className="flex items-center justify-center gap-2">
                     <Sparkles size={16} className="text-[#A9D3C5]" />
-                    {type === 'masuk' ? 'SIMPAN UANG MASUK' : 'SIMPAN PENGELUARAN'}
+                    {type === 'masuk' ? 'Simpan uang masuk' : 'Simpan pengeluaran'}
                   </span>
                 )}
               </button>
