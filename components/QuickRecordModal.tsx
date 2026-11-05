@@ -6,18 +6,25 @@ import { X, ArrowDownLeft, ArrowUpRight, Check, ShoppingBag, Delete, Sparkles } 
 import { supabase } from '@/lib/supabase';
 import { rupiah, todayISO } from '@/lib/accounting';
 import { kaChing } from '@/lib/sound';
+import { ensureTodaySession, type QuickSavedDetail } from '@/lib/quickSession';
 import CavaLogo from './CavaLogo';
+import QrisCashier from './QrisCashier';
 
 type QuickRecordModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess?: () => void;
+  onSuccess?: (detail?: QuickSavedDetail) => void;
+  /** Tab yang terbuka saat modal dibuka (mis. dari tombol Jual / Keluar / QRIS di beranda). */
+  initialType?: 'masuk' | 'keluar';
+  initialMetode?: 'tunai' | 'qris';
 };
 
 export default function QuickRecordModal({
   isOpen,
   onClose,
   onSuccess,
+  initialType = 'masuk',
+  initialMetode = 'tunai',
 }: QuickRecordModalProps) {
   const [type, setType] = useState<'masuk' | 'keluar'>('masuk');
   const [nominalStr, setNominalStr] = useState<string>('');
@@ -26,6 +33,7 @@ export default function QuickRecordModal({
   const [loading, setLoading] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [kategoriBiaya, setKategoriBiaya] = useState('Belanja bahan baku');
+  const [errMsg, setErrMsg] = useState('');
 
   // Quick preset amounts
   const presets = [10000, 20000, 50000, 100000, 150000, 250000];
@@ -54,72 +62,81 @@ export default function QuickRecordModal({
     setNominalStr(String(amount));
   };
 
+  const selesai = (detail: QuickSavedDetail) => {
+    kaChing();
+    setSavedSuccess(true);
+    setTimeout(() => {
+      setSavedSuccess(false);
+      setNominalStr('');
+      setKeterangan('');
+      setLoading(false);
+      if (onSuccess) onSuccess(detail);
+      onClose();
+    }, 900);
+  };
+
   const handleSave = async () => {
     if (nominalNumber <= 0) return;
     setLoading(true);
+    setErrMsg('');
+
+    const jenis = type === 'masuk' ? 'penjualan' : 'biaya';
+    const metodeTx = type === 'masuk' ? metode : null;
+    const note = keterangan.trim() || (type === 'masuk' ? 'Penjualan tunai kasir' : kategoriBiaya);
 
     try {
-      const tanggal = todayISO();
       const { data: { user } } = await supabase.auth.getUser();
 
-      const note = keterangan.trim() || (type === 'masuk' ? 'Penjualan tunai kasir' : kategoriBiaya);
-
-      if (user) {
-        // Find or create daily session
-        let { data: session } = await supabase
-          .from('daily_sessions')
-          .select('id')
-          .eq('tanggal', tanggal)
-          .maybeSingle();
-
-        if (!session) {
-          const { data: newSession } = await supabase
-            .from('daily_sessions')
-            .insert({ tanggal, modal_harian: 0 })
-            .select('id')
-            .single();
-          session = newSession;
-        }
-
-        if (session) {
-          await supabase.from('transactions').insert({
-            session_id: session.id,
-            user_id: user.id,
-            jenis: type === 'masuk' ? 'penjualan' : 'biaya',
-            keterangan: note,
-            jumlah: nominalNumber,
-            qty: 1,
-            metode: type === 'masuk' ? metode : null,
-          });
-        }
+      if (!user) {
+        // Mode tamu: tidak ada database, beranda menambahkan barisnya langsung dari event.
+        selesai({
+          guest: true,
+          rows: [{ id: crypto.randomUUID(), jenis, keterangan: note, jumlah: nominalNumber, metode: metodeTx, qty: 1, created_at: new Date().toISOString() }],
+        });
+        return;
       }
 
-      // Play CAVA chime sound
-      kaChing();
-      setSavedSuccess(true);
+      const sessionId = await ensureTodaySession(todayISO());
+      if (!sessionId) {
+        setLoading(false);
+        setErrMsg('Sesi penjualan hari ini gagal dibuat. Transaksi belum tersimpan.');
+        return;
+      }
 
-      setTimeout(() => {
-        setSavedSuccess(false);
-        setNominalStr('');
-        setKeterangan('');
+      const { data, error } = await supabase
+        .from('transactions')
+        .insert({
+          session_id: sessionId,
+          user_id: user.id,
+          jenis,
+          keterangan: note,
+          jumlah: nominalNumber,
+          qty: 1,
+          metode: metodeTx,
+        })
+        .select('*')
+        .single();
+
+      if (error || !data) {
         setLoading(false);
-        if (onSuccess) onSuccess();
-        onClose();
-      }, 900);
+        setErrMsg(`Transaksi gagal disimpan${error ? `: ${error.message}` : '.'}`);
+        return;
+      }
+
+      selesai({ guest: false, rows: [{ ...data, jumlah: Number(data.jumlah) }] });
     } catch {
-      // In demo mode or if offline, still simulate instant success
-      kaChing();
-      setSavedSuccess(true);
-      setTimeout(() => {
-        setSavedSuccess(false);
-        setNominalStr('');
-        setKeterangan('');
-        setLoading(false);
-        if (onSuccess) onSuccess();
-        onClose();
-      }, 900);
+      setLoading(false);
+      setErrMsg('Tidak bisa menyimpan transaksi. Periksa koneksi internet lalu coba lagi.');
     }
   };
+
+  // Saat modal dibuka, pakai tab yang diminta pemanggil.
+  useEffect(() => {
+    if (!isOpen) return;
+    setType(initialType);
+    setMetode(initialMetode);
+    setErrMsg('');
+  }, [isOpen, initialType, initialMetode]);
 
   // Close on Escape
   useEffect(() => {
@@ -196,7 +213,8 @@ export default function QuickRecordModal({
               </button>
             </div>
 
-            {/* Big Amount Display */}
+            {/* Big Amount Display (tidak dipakai di mode QRIS: harga terisi dari produk) */}
+            {!(type === 'masuk' && metode === 'qris') && (
             <div className="mt-3 rounded-2xl bg-[#EEF5F1] p-4 text-center">
               <span className="text-xs font-bold text-[#4F6B7C]">
                 {type === 'masuk' ? 'Nominal penjualan' : 'Nominal pengeluaran'}
@@ -212,8 +230,10 @@ export default function QuickRecordModal({
                 {nominalNumber > 0 ? (type === 'masuk' ? 'Akan ditambahkan ke pemasukan hari ini' : 'Akan dicatat sebagai beban operasional') : 'Ketik angka pada tombol di bawah'}
               </p>
             </div>
+            )}
 
             {/* Quick Presets */}
+            {!(type === 'masuk' && metode === 'qris') && (
             <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
               {presets.map((p) => (
                 <button
@@ -226,6 +246,7 @@ export default function QuickRecordModal({
                 </button>
               ))}
             </div>
+            )}
 
             {/* Method (Tunai vs QRIS for Masuk) or Category for Keluar */}
             {type === 'masuk' ? (
@@ -272,6 +293,10 @@ export default function QuickRecordModal({
               </div>
             )}
 
+            {/* Mode QRIS: pilih produk, tanpa mengetik harga */}
+            {type === 'masuk' && metode === 'qris' && <QrisCashier active={isOpen} onRecorded={(detail) => { if (onSuccess) onSuccess(detail); }} />}
+
+            {!(type === 'masuk' && metode === 'qris') && (<>
             {/* Note Input */}
             <input
               type="text"
@@ -294,6 +319,10 @@ export default function QuickRecordModal({
                 </button>
               ))}
             </div>
+
+            {errMsg && (
+              <p role="alert" className="err mt-3">{errMsg}</p>
+            )}
 
             {/* Submit Action Button */}
             <div className="mt-4">
@@ -321,6 +350,7 @@ export default function QuickRecordModal({
                 )}
               </button>
             </div>
+            </>)}
           </motion.div>
         </div>
       )}

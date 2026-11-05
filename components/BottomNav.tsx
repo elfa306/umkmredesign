@@ -17,12 +17,25 @@ import {
   LogOut
 } from 'lucide-react';
 import QuickRecordModal from './QuickRecordModal';
+import { announceTransactionSaved, OPEN_CATAT_EVENT } from '@/lib/quickSession';
 import { CavaLogo, CavaVMark } from './CavaLogo';
 import { supabase } from '@/lib/supabase';
 
 export default function BottomNav() {
   const p = usePathname();
   const [showCatatModal, setShowCatatModal] = useState(false);
+  const [catatAwal, setCatatAwal] = useState<{ type: 'masuk' | 'keluar'; metode: 'tunai' | 'qris' }>({ type: 'masuk', metode: 'tunai' });
+
+  // Halaman lain (mis. Aksi Cepat di beranda) membuka modal ini lewat event, supaya hanya ada satu modal.
+  useEffect(() => {
+    const buka = (e: Event) => {
+      const d = (e as CustomEvent<{ type?: 'masuk' | 'keluar'; metode?: 'tunai' | 'qris' }>).detail ?? {};
+      setCatatAwal({ type: d.type ?? 'masuk', metode: d.metode ?? 'tunai' });
+      setShowCatatModal(true);
+    };
+    window.addEventListener(OPEN_CATAT_EVENT, buka);
+    return () => window.removeEventListener(OPEN_CATAT_EVENT, buka);
+  }, []);
   const [namaUsaha, setNamaUsaha] = useState('[Nama Usaha]');
 
   useEffect(() => {
@@ -74,7 +87,7 @@ export default function BottomNav() {
         <div className="flex flex-col items-center">
           <motion.button
             whileTap={{ scale: 0.92 }}
-            onClick={() => setShowCatatModal(true)}
+            onClick={() => { setCatatAwal({ type: 'masuk', metode: 'tunai' }); setShowCatatModal(true); }}
             aria-label="Catat transaksi"
             className="-mt-7 flex h-14 w-14 items-center justify-center rounded-full bg-[#103A57] text-white shadow-[0_8px_18px_rgba(16,58,87,0.35)] ring-4 ring-white"
           >
@@ -115,7 +128,7 @@ export default function BottomNav() {
           <motion.button
             whileTap={{ scale: 0.95 }}
             whileHover={{ scale: 1.02 }}
-            onClick={() => setShowCatatModal(true)}
+            onClick={() => { setCatatAwal({ type: 'masuk', metode: 'tunai' }); setShowCatatModal(true); }}
             className="w-full py-3 px-4 rounded-xl bg-[#CEE5D6] hover:bg-white text-[#103A57] font-extrabold text-xs flex items-center justify-center gap-2.5 transition-all"
           >
             <CavaVMark size={18} />
@@ -166,9 +179,9 @@ export default function BottomNav() {
       <QuickRecordModal
         isOpen={showCatatModal}
         onClose={() => setShowCatatModal(false)}
-        onSuccess={() => {
-          window.dispatchEvent(new CustomEvent('cava:transaction-saved'));
-        }}
+        initialType={catatAwal.type}
+        initialMetode={catatAwal.metode}
+        onSuccess={(detail) => announceTransactionSaved(detail)}
       />
     </>
   );
