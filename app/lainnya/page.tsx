@@ -64,21 +64,23 @@ export default function AkunLainnyaPage() {
   return (
     <div className="wrap">
       {/* Header */}
-      <header className="pt-6 pb-2 text-center">
-        <p className="text-xs font-bold text-[#307B8E]">Pengaturan Akun</p>
-        <h1 className="text-2xl font-black text-[#103A57] tracking-tight">Akun & Fitur</h1>
-      </header>
+      <div className="header-app">
+        <div>
+          <h1>Akun &amp; Fitur</h1>
+          <p>Pengaturan akun</p>
+        </div>
+      </div>
 
       {/* User Profile Card (Prussian Blue #103A57) */}
       <Rise delay={0.02}>
-        <div className="rounded-3xl bg-[#103A57] p-5 text-white shadow-xl shadow-[#103A57]/15 border border-white/10 flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 p-2 shadow-inner">
+        <div className="card flex items-center gap-4 !p-4">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#103A57] p-3">
             <CavaLogo variant="mark" size="md" />
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="text-base font-black truncate">{userName}</h2>
-            <p className="text-xs text-[#A9D3C5] font-semibold truncate">{userEmail || 'Akun UMKM Terdaftar'}</p>
-            <span className="inline-block mt-1.5 rounded-full bg-white/15 px-2.5 py-0.5 text-[10px] font-extrabold text-[#CEE5D6]">
+            <h2 className="text-base font-extrabold truncate text-[#103A57]">{userName}</h2>
+            <p className="text-xs text-[#4F6B7C] font-semibold truncate">{userEmail || 'Akun UMKM Terdaftar'}</p>
+            <span className="inline-block mt-1.5 rounded-full bg-[#CEE5D6] px-2.5 py-0.5 text-[10px] font-extrabold text-[#103A57]">
               CAVA Basic Member
             </span>
           </div>
@@ -93,9 +95,9 @@ export default function AkunLainnyaPage() {
             <Rise key={m.href} delay={0.04 * (i + 1)}>
               <Link
                 href={m.href}
-                className="flex items-center gap-3.5 rounded-2xl bg-white p-4 shadow-sm border border-[#307B8E]/10 hover:border-[#307B8E]/30 active:scale-[0.99] transition"
+                className="card flex items-center gap-3.5 active:scale-[0.99] transition"
               >
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[#A9D3C5]/40 text-[#103A57]">
+                <div className="ico-tile !h-11 !w-11 shrink-0">
                   <Icon size={20} strokeWidth={2.2} />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -114,7 +116,7 @@ export default function AkunLainnyaPage() {
         <button
           type="button"
           onClick={keluar}
-          className="w-full rounded-2xl bg-white border border-red-200 py-3.5 px-4 text-xs font-extrabold text-[#991B1B] shadow-sm hover:bg-red-50/50 active:scale-[0.98] transition flex items-center justify-center gap-2"
+          className="w-full rounded-2xl bg-white py-3.5 px-4 text-xs font-extrabold text-[#991B1B] shadow-[0_1px_2px_rgba(16,58,87,0.05),0_8px_22px_-12px_rgba(16,58,87,0.18)] hover:bg-red-50/60 active:scale-[0.98] transition flex items-center justify-center gap-2"
         >
           <LogOut size={16} /> Keluar dari Akun
         </button>

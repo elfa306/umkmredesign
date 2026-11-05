@@ -495,13 +495,10 @@ export default function InventoryManager() {
       {/* Header */}
       <div className="header-app">
         <div>
-          <span className="text-xs font-bold text-[#307B8E] uppercase tracking-wider">
-            Manajemen Logistik &amp; Kas
-          </span>
-          <h1 className="text-2xl font-black text-[#103A57] tracking-tight">
+          <h1>
             Inventaris &amp; Stok
           </h1>
-          <p className="text-xs text-[#307B8E] font-medium mt-0.5">
+          <p>
             Kelola katalog produk, biaya HPP, dan mutasi persediaan harian.
           </p>
         </div>
@@ -510,7 +507,7 @@ export default function InventoryManager() {
           <button
             type="button"
             onClick={() => setShowAdjustmentModal(true)}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-[#307B8E]/20 text-[#103A57] text-xs font-bold hover:bg-[#CEE5D6]/30 shadow-xs transition"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 text-white text-xs font-bold hover:bg-white/20 transition"
           >
             <ArrowUpDown size={14} />
             <span>Mutasi Stok</span>
@@ -518,7 +515,7 @@ export default function InventoryManager() {
           <button
             type="button"
             onClick={() => setShowProduct(true)}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#103A57] text-white text-xs font-bold hover:bg-[#0c2d44] shadow-sm transition"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#CEE5D6] text-[#103A57] text-xs font-bold hover:bg-white transition"
           >
             <Plus size={15} />
             <span>Tambah Produk</span>
@@ -541,7 +538,7 @@ export default function InventoryManager() {
 
       {/* 4 Metric Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#307B8E]/15">
+        <div className="card">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-[11px] font-bold text-slate-500 uppercase">Total Produk</span>
             <Boxes size={18} className="text-[#103A57]" />
@@ -550,7 +547,7 @@ export default function InventoryManager() {
           <span className="text-[10px] text-slate-400 font-semibold">{tracked.length} lacak stok fisik</span>
         </div>
 
-        <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#307B8E]/15">
+        <div className="card">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-[11px] font-bold text-slate-500 uppercase">Stok Fisik</span>
             <Package size={18} className="text-[#307B8E]" />
@@ -559,7 +556,7 @@ export default function InventoryManager() {
           <span className="text-[10px] text-slate-400 font-semibold">Total unit tersedia</span>
         </div>
 
-        <div className="rounded-2xl bg-white p-4 shadow-sm border border-[#307B8E]/15">
+        <div className="card">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-[11px] font-bold text-slate-500 uppercase">Nilai Aset Stok</span>
             <ShieldCheck size={18} className="text-[#366B2B]" />

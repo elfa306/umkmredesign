@@ -188,10 +188,12 @@ export default function Laporan() {
   return (
     <div className="wrap" ref={areaRef}>
       {/* Header */}
-      <header className="pt-6 pb-2 text-center">
-        <p className="text-xs font-bold text-[#307B8E]">Pencatatan Keuangan</p>
-        <h1 className="text-2xl font-black text-[#103A57] tracking-tight">Riwayat & Laporan</h1>
-      </header>
+      <div className="header-app">
+        <div>
+          <h1>Riwayat &amp; Laporan</h1>
+          <p>Pencatatan keuangan</p>
+        </div>
+      </div>
 
       {/* Hero Card (Prussian Blue #103A57) */}
       <Rise delay={0.02}>

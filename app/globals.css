@@ -3,8 +3,10 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 /* =====================================================================
- * CAVA (Cash Value) Design System & Color Tokens
- * Light Silver, Prussian Blue, Teal Blue, Pastel Blue, Mughal Green
+ * CAVA (Cash Value) · gaya aplikasi bank UMKM (mengacu pada Qita by BRI)
+ * Palet dari bahan.zip: Prussian, Teal, Pastel, Light Silver, Mughal Green
+ * Prinsip: latar terang, kartu putih tanpa garis tepi, header biru tua
+ * melengkung (gema lengkung di splash), ikon dalam kotak lembut.
  * ===================================================================== */
 :root {
   --cava-bg: #CEE5D6;          /* Light Silver */
@@ -12,15 +14,21 @@
   --cava-teal: #307B8E;        /* Teal Blue */
   --cava-pastel: #A9D3C5;      /* Pastel Blue */
   --cava-green: #366B2B;       /* Mughal Green */
-  --cava-expense: #991B1B;     /* Deep Rust Crimson */
+  --cava-expense: #991B1B;
+  --cava-page: #EEF5F1;        /* latar halaman: Light Silver yang dilembutkan */
+  --cava-arc: #205874;         /* lengkung splash */
+  --cava-tint: #E3F0EA;        /* kotak ikon / chip */
   --primary: #103A57;
   --accent: #307B8E;
-  --bg: #CEE5D6;
+  --bg: #EEF5F1;
   --text: #103A57;
-  --muted: #486577;
+  --muted: #4F6B7C;
   --ok: #366B2B;
   --bad: #991B1B;
-  --warn: #D97706;
+  --warn: #B45309;
+  --r-card: 18px;
+  --r-ctl: 14px;
+  --shadow-card: 0 1px 2px rgba(16, 58, 87, 0.05), 0 8px 22px -12px rgba(16, 58, 87, 0.18);
 }
 
 * {
@@ -34,7 +42,7 @@ html, body {
 }
 
 body {
-  background: var(--cava-bg);
+  background: var(--cava-page);
   color: var(--cava-prussian);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
@@ -46,12 +54,17 @@ a {
   text-decoration: none;
 }
 
-/* Base Mobile-first App Wrapper with Desktop Sidebar Support */
+:focus-visible {
+  outline: 2px solid var(--cava-teal);
+  outline-offset: 2px;
+}
+
+/* Kerangka halaman: satu kolom di ponsel, bergeser untuk sidebar di desktop */
 .wrap {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  padding: 0 16px calc(112px + env(safe-area-inset-bottom));
+  padding: 0 16px calc(104px + env(safe-area-inset-bottom));
   display: grid;
   gap: 16px;
   align-content: start;
@@ -62,8 +75,8 @@ a {
     max-width: 1020px;
     margin-left: 270px;
     margin-right: auto;
-    padding: 28px 36px 64px 36px;
-    gap: 24px;
+    padding: 24px 36px 64px 36px;
+    gap: 20px;
   }
 }
 
@@ -71,135 +84,214 @@ a {
   .wrap {
     max-width: 1200px;
     margin-left: 280px;
-    padding: 36px 48px 80px 48px;
+    padding: 32px 48px 80px 48px;
   }
 }
 
-.header-app {
-  padding: calc(24px + env(safe-area-inset-top)) 0 4px;
-  text-align: center;
+/* ---------------------------------------------------------------------
+ * Header biru melengkung. Dipakai semua halaman lewat .header-app
+ * dan .home-band (beranda). Lengkung bawah meniru lengkung di splash.
+ * ------------------------------------------------------------------- */
+.header-app,
+.home-band {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -16px;
+  padding: calc(22px + env(safe-area-inset-top)) 22px 34px;
+  background: var(--cava-prussian);
+  color: #ffffff;
+  border-radius: 0 0 28px 28px;
+  text-align: left;
+}
+
+.header-app::after,
+.home-band::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -70px;
+  width: 130%;
+  height: 90px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--cava-arc);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.header-app > *,
+.home-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-band {
+  padding-bottom: 84px;
 }
 
 @media (min-width: 1024px) {
+  .header-app,
+  .home-band {
+    margin: 0;
+    border-radius: 24px;
+    padding: 26px 32px 30px;
+  }
+  .home-band {
+    padding-bottom: 80px;
+  }
   .header-app {
-    text-align: left;
-    padding-top: 8px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    gap: 16px;
   }
 }
 
 .header-app h1 {
   margin: 0;
-  font-weight: 900;
-  font-size: 1.4rem;
-  letter-spacing: -0.5px;
-  color: var(--cava-prussian);
+  font-weight: 800;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  color: #ffffff;
 }
 
 .header-app h1 span {
-  color: var(--cava-teal);
+  color: var(--cava-pastel);
 }
 
 .header-app p {
   margin: 4px 0 0;
   font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--cava-teal);
+  font-weight: 600;
+  color: var(--cava-pastel);
 }
 
-/* CAVA Glass Card & Surfaces */
+/* Kartu utama yang menumpuk di atas header (saldo / ringkasan) */
+.home-hero {
+  margin-top: -68px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------------------------------------------------------------------
+ * Permukaan
+ * ------------------------------------------------------------------- */
+.card,
 .glass-card {
   background: #ffffff;
-  border-radius: 26px;
-  padding: 20px;
-  border: 1px solid rgba(48, 123, 142, 0.12);
-  box-shadow: 0 8px 24px -4px rgba(16, 58, 87, 0.06);
+  border-radius: var(--r-card);
+  padding: 16px;
+  border: 0;
+  box-shadow: var(--shadow-card);
+}
+
+.glass-card {
   display: grid;
   gap: 12px;
 }
 
-/* CAVA Hero Card in Prussian Blue (#103A57) */
+.card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--cava-prussian);
+}
+
+.card-link {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--cava-teal);
+}
+
+/* Ikon dalam kotak lembut (menu, aksi cepat, daftar) */
+.ico-tile {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--cava-tint);
+  color: var(--cava-prussian);
+  flex: none;
+}
+
+/* Kartu saldo / hero */
 .balance-card {
-  background: #103A57;
-  color: #ffffff;
-  border-radius: 28px;
-  padding: 24px 20px;
-  text-align: center;
-  box-shadow: 0 16px 36px -8px rgba(16, 58, 87, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #ffffff;
+  color: var(--cava-prussian);
+  border-radius: 22px;
+  padding: 20px 18px;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(16, 58, 87, 0.06), 0 18px 36px -16px rgba(16, 58, 87, 0.35);
+  border: 0;
   position: relative;
   overflow: hidden;
 }
 
 .balance-card small {
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #A9D3C5;
-  opacity: 0.95;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--muted);
 }
 
 .balance-card h2 {
-  margin: 8px 0 0;
-  font-weight: 900;
-  font-size: 2.1rem;
+  margin: 6px 0 0;
+  font-weight: 800;
+  font-size: 2rem;
   letter-spacing: -0.5px;
-  color: #ffffff;
+  color: var(--cava-prussian);
 }
 
 .balance-card h2.neg {
-  color: #fca5a5;
+  color: var(--cava-expense);
 }
 
 .balance-card h2.pos {
-  color: #CEE5D6;
+  color: var(--cava-green);
 }
 
 .stat3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 .stat3 div {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 10px 6px;
+  background: var(--cava-tint);
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 10px;
 }
 
 .stat3 b {
   display: block;
   font-size: 0.82rem;
-  color: #ffffff;
+  color: var(--cava-prussian);
 }
 
 .stat3 span {
-  font-size: 0.62rem;
-  color: #A9D3C5;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--muted);
+  font-weight: 700;
 }
 
-/* Labels and Form Elements */
+/* ---------------------------------------------------------------------
+ * Form
+ * ------------------------------------------------------------------- */
 .label {
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: var(--cava-teal);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--muted);
   display: block;
 }
 
 input, select {
   width: 100%;
-  border-radius: 16px;
-  border: 1.5px solid rgba(48, 123, 142, 0.18);
-  padding: 14px;
+  border-radius: var(--r-ctl);
+  border: 1.5px solid #D5E4DC;
+  padding: 13px 14px;
   font: 600 0.95rem 'Plus Jakarta Sans', system-ui, sans-serif;
   background: #ffffff;
   color: var(--cava-prussian);
@@ -208,21 +300,27 @@ input, select {
 input:focus, select:focus {
   outline: none;
   border-color: var(--cava-teal);
-  box-shadow: 0 0 0 3px rgba(48, 123, 142, 0.12);
+  box-shadow: 0 0 0 3px rgba(48, 123, 142, 0.15);
 }
 
-/* CAVA Buttons */
+/* ---------------------------------------------------------------------
+ * Tombol
+ * ------------------------------------------------------------------- */
 .btn-main {
   width: 100%;
   border: 0;
-  border-radius: 18px;
-  padding: 16px;
+  border-radius: var(--r-ctl);
+  padding: 15px;
   font: 800 0.92rem 'Plus Jakarta Sans', system-ui, sans-serif;
   background: var(--cava-prussian);
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(16, 58, 87, 0.25);
+  box-shadow: none;
   cursor: pointer;
-  transition: all 0.18s ease-out;
+  transition: background 0.16s ease, transform 0.12s ease;
+}
+
+.btn-main:hover {
+  background: #174968;
 }
 
 .btn-main:active {
@@ -237,14 +335,13 @@ input:focus, select:focus {
 .btn-soft {
   width: 100%;
   border: 0;
-  border-radius: 16px;
-  padding: 14px;
+  border-radius: var(--r-ctl);
+  padding: 13px;
   font: 800 0.88rem 'Plus Jakarta Sans', system-ui, sans-serif;
-  background: #ffffff;
+  background: var(--cava-tint);
   color: var(--cava-prussian);
-  border: 1px solid rgba(48, 123, 142, 0.15);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(16, 58, 87, 0.04);
+  box-shadow: none;
 }
 
 .btn-soft:active {
@@ -265,59 +362,63 @@ input:focus, select:focus {
   cursor: pointer;
 }
 
-/* Filter controls */
+/* ---------------------------------------------------------------------
+ * Filter & toggle
+ * ------------------------------------------------------------------- */
 .filter-pills {
   display: flex;
   gap: 8px;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto;
   scrollbar-width: none;
 }
 
 .btn-pill {
-  border-radius: 14px;
-  border: 1px solid rgba(48, 123, 142, 0.2);
+  border-radius: 999px;
+  border: 0;
   background: #ffffff;
   font: 700 0.75rem 'Plus Jakarta Sans', system-ui, sans-serif;
-  padding: 10px 16px;
+  padding: 9px 16px;
   color: var(--muted);
   white-space: nowrap;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
 }
 
 .btn-pill.active {
   background: var(--cava-prussian);
   color: #ffffff;
-  border-color: var(--cava-prussian);
-  box-shadow: 0 4px 12px rgba(16, 58, 87, 0.15);
 }
 
 .toggle-stats {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 5px;
+  background: #E1EEE8;
+  border-radius: var(--r-ctl);
+  padding: 4px;
   display: flex;
-  border: 1px solid rgba(48, 123, 142, 0.15);
+  border: 0;
 }
 
 .toggle-stats button {
   flex: 1;
   border: 0;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 11px;
+  border-radius: 11px;
   font: 800 0.8rem 'Plus Jakarta Sans', system-ui, sans-serif;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .toggle-stats button.active {
-  background: var(--cava-prussian);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(16, 58, 87, 0.2);
+  background: #ffffff;
+  color: var(--cava-prussian);
+  box-shadow: 0 1px 3px rgba(16, 58, 87, 0.12);
 }
 
+/* ---------------------------------------------------------------------
+ * Daftar & baris
+ * ------------------------------------------------------------------- */
 .row {
   display: flex;
   justify-content: space-between;
@@ -330,10 +431,10 @@ input:focus, select:focus {
   align-items: center;
   gap: 12px;
   padding: 14px;
-  border-radius: 18px;
+  border-radius: var(--r-card);
   background: #ffffff;
-  border: 1px solid rgba(48, 123, 142, 0.1);
-  box-shadow: 0 4px 12px rgba(16, 58, 87, 0.03);
+  border: 0;
+  box-shadow: var(--shadow-card);
 }
 
 .trx .grow {
@@ -366,22 +467,22 @@ input:focus, select:focus {
   font-size: 0.68rem;
   font-weight: 800;
   padding: 4px 10px;
-  border-radius: 10px;
+  border-radius: 999px;
   display: inline-block;
 }
 
 .badge.ok {
-  background: rgba(54, 107, 43, 0.15);
+  background: rgba(54, 107, 43, 0.13);
   color: var(--cava-green);
 }
 
 .badge.bad {
-  background: rgba(153, 27, 27, 0.12);
+  background: rgba(153, 27, 27, 0.1);
   color: var(--cava-expense);
 }
 
 .badge.flat {
-  background: #ffffff;
+  background: var(--cava-tint);
   color: var(--muted);
 }
 
@@ -390,8 +491,8 @@ input:focus, select:focus {
   justify-content: space-between;
   font-size: 0.8rem;
   font-weight: 700;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(48, 123, 142, 0.08);
+  padding: 10px 0;
+  border-bottom: 1px solid #E6F0EB;
 }
 
 .cat-item {
@@ -399,13 +500,13 @@ input:focus, select:focus {
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(48, 123, 142, 0.08);
+  border-bottom: 1px solid #E6F0EB;
 }
 
 .cat-dot {
   width: 40px;
   height: 40px;
-  border-radius: 14px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -414,8 +515,8 @@ input:focus, select:focus {
 
 .progress {
   height: 8px;
-  background: rgba(48, 123, 142, 0.12);
-  border-radius: 10px;
+  background: #DCEAE3;
+  border-radius: 999px;
   overflow: hidden;
   margin-top: 6px;
 }
@@ -423,23 +524,23 @@ input:focus, select:focus {
 .progress i {
   display: block;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 999px;
   background: var(--cava-teal);
 }
 
-/* Tabular Numerals for Financial Data */
+/* Angka rata untuk data keuangan */
 .tabular-nums, .amt, .balance-card h2, .stat3 b, .line span:last-child, .cat-item b, .mut-amt, .tnum {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
 }
 
-/* Mutasi Transaksi */
+/* Mutasi transaksi */
 .mut {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(48, 123, 142, 0.08);
+  border-bottom: 1px solid #E6F0EB;
 }
 
 .mut:last-of-type {
@@ -447,9 +548,9 @@ input:focus, select:focus {
 }
 
 .mut-ico {
-  width: 38px;
-  height: 38px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -462,7 +563,7 @@ input:focus, select:focus {
 }
 
 .mut-ico.out {
-  background: rgba(153, 27, 27, 0.1);
+  background: rgba(153, 27, 27, 0.09);
   color: var(--cava-expense);
 }
 
@@ -493,7 +594,7 @@ input:focus, select:focus {
   color: var(--cava-expense);
 }
 
-/* Pop-up QRIS toast */
+/* Pop-up QRIS */
 .qris-toast {
   position: fixed;
   left: 50%;
@@ -502,15 +603,14 @@ input:focus, select:focus {
   width: calc(100% - 28px);
   max-width: 440px;
   z-index: 80;
-  background: #103A57;
+  background: var(--cava-prussian);
   color: #fff;
-  border-radius: 22px;
+  border-radius: 18px;
   padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 14px;
-  box-shadow: 0 18px 40px -8px rgba(16, 58, 87, 0.45);
-  border: 1px solid rgba(169, 211, 197, 0.3);
+  box-shadow: 0 18px 40px -8px rgba(16, 58, 87, 0.5);
 }
 
 .qris-toast .ico {
@@ -521,49 +621,55 @@ input:focus, select:focus {
   display: block;
   font-size: 0.72rem;
   opacity: 0.9;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: #A9D3C5;
+  color: var(--cava-pastel);
 }
 
 .qris-toast strong {
   font-size: 1.35rem;
-  font-weight: 900;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   color: #ffffff;
 }
 
-/* Touch manipulation */
 .btn-main, .btn-soft, .btn-sm, .btn-pill {
   touch-action: manipulation;
 }
 
-/* CAVA brand palette supplied in bahan.zip: scope-sensitive form controls. */
+/* Gerak dikurangi bila pengguna memintanya */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * Kolom isian halaman masuk
+ * ------------------------------------------------------------------- */
 input.auth-input {
   display: block;
   width: 100%;
   min-height: 52px;
   padding: 0 48px 0 46px !important;
-  border: 1px solid rgba(48, 123, 142, 0.22);
-  border-radius: 15px;
-  background: #f8fbfa;
-  color: #103A57;
-  font: 600 13px/1.35 'Plus Jakarta Sans', system-ui, sans-serif;
+  border: 1.5px solid #D5E4DC;
+  border-radius: var(--r-ctl);
+  background: #ffffff;
+  color: var(--cava-prussian);
+  font: 600 14px/1.35 'Plus Jakarta Sans', system-ui, sans-serif;
   box-shadow: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
 input.auth-input::placeholder {
-  color: #94a3b8;
+  color: #94A8B3;
   font-weight: 500;
   opacity: 1;
 }
 
 input.auth-input:focus {
   outline: none;
-  border-color: #307B8E;
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(48, 123, 142, 0.12);
+  border-color: var(--cava-teal);
+  box-shadow: 0 0 0 4px rgba(48, 123, 142, 0.14);
 }
 
 input.auth-input:disabled {
@@ -602,4 +708,3 @@ input.loan-range::-moz-range-thumb {
   background: #103A57;
   box-shadow: 0 1px 6px rgba(16, 58, 87, 0.24);
 }
-

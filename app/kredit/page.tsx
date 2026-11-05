@@ -212,17 +212,15 @@ export default function NilaiUsahaPage() {
 
   return (
     <div className="wrap" ref={areaRef}>
-      <header className="flex items-center justify-between gap-3 pt-5 pb-1">
+      <div className="header-app">
         <div className="min-w-0">
-          <CavaLogo variant="horizontal" height={25} />
-          <p className="mt-2 text-[10px] font-extrabold tracking-[0.19em] text-[#307B8E]">RAPOR USAHA</p>
-          <h1 className="mt-1 text-2xl font-black tracking-tight text-[#103A57]">Nilai Usaha</h1>
-          <p className="mt-1 text-[11px] font-medium text-slate-500">Ringkasan perkembangan 30 hari terakhir</p>
+          <h1>Nilai Usaha</h1>
+          <p>Ringkasan perkembangan 30 hari terakhir</p>
         </div>
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-[#307B8E] shadow-sm ring-1 ring-[#307B8E]/10">
+        <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 text-[#CEE5D6]">
           <TrendingUp size={22} />
         </div>
-      </header>
+      </div>
 
       {loadError && (
         <div role="status" className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold leading-5 text-amber-800">
@@ -231,7 +229,7 @@ export default function NilaiUsahaPage() {
       )}
 
       <Rise delay={0.02}>
-        <section className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#103A57] p-5 text-white shadow-xl shadow-[#103A57]/15 sm:p-6">
+        <section className="relative overflow-hidden rounded-[22px] border border-white/10 bg-[#103A57] p-5 text-white  sm:p-6">
           <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[#307B8E]/35 blur-3xl" />
           <div className="relative z-10 flex items-center justify-between gap-3">
             <div>

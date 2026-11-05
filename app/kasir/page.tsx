@@ -335,120 +335,105 @@ export default function Kasir() {
 
   return (
     <div className="wrap">
-      {/* 1. Header (Greeting + Name + Bell Icon) */}
-      <header className="flex items-center justify-between gap-3 pt-5 pb-2">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white p-2 shadow-sm ring-1 ring-[#307B8E]/10">
-            <CavaVMark size={30} />
+      {/* Header biru + kartu ringkasan yang menumpuk di atasnya */}
+      <div className="home-band">
+        <header className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10">
+              <CavaVMark size={26} />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold text-[#A9D3C5]">{salamWaktu()},</p>
+              <h1 className="truncate text-base font-extrabold tracking-tight text-white">{namaUsaha}</h1>
+            </div>
           </div>
-          <div className="min-w-0">
-            <CavaLogo variant="horizontal" height={20} />
-            <p className="mt-1 text-[11px] font-semibold text-[#307B8E]">{salamWaktu()},</p>
-            <h1 className="truncate text-lg font-black tracking-tight text-[#103A57]">{namaUsaha}</h1>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={gantiSuara}
+              className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Toggle sound"
+            >
+              {suara ? <Volume2 size={18} /> : <VolumeX size={18} className="text-white/50" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowNotifModal(true)}
+              className="relative grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Notifikasi"
+            >
+              <Bell size={18} />
+              <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-[#A9D3C5]" />
+            </button>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={gantiSuara}
-            className="grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-slate-50 transition"
-            aria-label="Toggle sound"
-          >
-            {suara ? <Volume2 size={18} className="text-[#103A57]" /> : <VolumeX size={18} className="text-slate-400" />}
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowNotifModal(true)}
-            className="relative grid h-10 w-10 place-items-center rounded-full bg-white text-[#103A57] shadow-sm border border-[#307B8E]/15 hover:bg-slate-50 transition"
-            aria-label="Notifikasi"
-          >
-            <Bell size={18} />
-            <span className="absolute top-2 right-2.5 h-2 w-2 rounded-full bg-[#307B8E]" />
-          </button>
-        </div>
-      </header>
+        </header>
+      </div>
 
-      {err && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 p-3 text-xs font-bold text-[#991B1B]">
-          {err}
-        </div>
-      )}
-
-      {/* 2. Hero Card (Prussian Blue #103A57) - Exact design from Beranda_5bca6021.pdf */}
-      <Rise delay={0.02}>
-        <section className="relative overflow-hidden rounded-[28px] bg-[#103A57] p-5 text-white shadow-xl shadow-[#103A57]/20 border border-white/10">
-          {/* Subtle curved background overlay */}
-          <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-[#307B8E]/25 blur-2xl" />
-
-          {/* Title & Privacy Eye Toggle */}
+      <Rise delay={0.02} className="home-hero">
+        <section className="balance-card">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-extrabold tracking-widest text-[#A9D3C5] uppercase">
-              UNTUNG BERSIH HARI INI
-            </span>
+            <span className="text-xs font-bold text-[#4F6B7C]">Untung bersih hari ini</span>
             <button
               type="button"
               onClick={() => setSembunyikanNominal(!sembunyikanNominal)}
-              className="text-[#A9D3C5] hover:text-white transition p-1"
+              className="p-1 text-[#307B8E] transition hover:text-[#103A57]"
               aria-label={sembunyikanNominal ? 'Tampilkan saldo' : 'Sembunyikan saldo'}
             >
               {sembunyikanNominal ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
 
-          {/* Big Profit Amount */}
-          <div className="mt-2">
-            <span className="text-3xl sm:text-4xl font-black tabular-nums tracking-tight text-white">
+          <div className="mt-1">
+            <span className="text-[1.9rem] font-extrabold tabular-nums tracking-tight text-[#103A57]">
               {sembunyikanNominal ? 'Rp •••••••' : rupiah(untungBersih)}
             </span>
           </div>
 
-          {/* Progress Bar & Subtext */}
           <div className="mt-3">
-            <div className="h-2 w-full rounded-full bg-white/15 overflow-hidden">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-[#DCEAE3]">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${persenBalik}%` }}
                 transition={{ duration: 0.9, ease: 'easeOut' }}
-                className="h-full rounded-full bg-[#A9D3C5]"
+                className="h-full rounded-full bg-[#307B8E]"
               />
             </div>
-            <p className="mt-2 text-xs font-bold text-white/90">
+            <p className="mt-2 text-xs font-semibold text-[#4F6B7C]">
               {modalHarian > 0
                 ? `${persenBalik}% balik modal · kurang ${rupiah(sisaModal)}`
                 : 'Isi modal harian untuk mulai menghitung progres balik modal.'}
             </p>
           </div>
 
-          {/* 3 Metric Columns: MASUK, KELUAR, MODAL */}
-          <div className="mt-4 grid grid-cols-3 gap-2 pt-3 border-t border-white/10">
-            <div className="rounded-xl bg-white/[0.07] p-2.5 text-left">
-              <p className="text-xs font-black tabular-nums text-white">
-                {sembunyikanNominal ? 'Rp •••' : rupiah(totalMasuk)}
-              </p>
-              <span className="text-[10px] font-extrabold tracking-wider text-[#A9D3C5] uppercase">MASUK</span>
+          <div className="stat3">
+            <div>
+              <b className="tabular-nums">{sembunyikanNominal ? 'Rp •••' : rupiah(totalMasuk)}</b>
+              <span>Masuk</span>
             </div>
-            <div className="rounded-xl bg-white/[0.07] p-2.5 text-left">
-              <p className="text-xs font-black tabular-nums text-white">
-                {sembunyikanNominal ? 'Rp •••' : rupiah(totalKeluar)}
-              </p>
-              <span className="text-[10px] font-extrabold tracking-wider text-[#A9D3C5] uppercase">KELUAR</span>
+            <div>
+              <b className="tabular-nums">{sembunyikanNominal ? 'Rp •••' : rupiah(totalKeluar)}</b>
+              <span>Keluar</span>
             </div>
-            <div className="rounded-xl bg-white/[0.07] p-2.5 text-left">
-              <p className="text-xs font-black tabular-nums text-white">
-                {sembunyikanNominal ? 'Rp •••' : rupiah(modalHarian)}
-              </p>
-              <span className="text-[10px] font-extrabold tracking-wider text-[#A9D3C5] uppercase">MODAL</span>
+            <div>
+              <b className="tabular-nums">{sembunyikanNominal ? 'Rp •••' : rupiah(modalHarian)}</b>
+              <span>Modal</span>
             </div>
           </div>
         </section>
       </Rise>
 
+      {err && (
+        <div className="rounded-2xl bg-red-50 p-3 text-xs font-bold text-[#991B1B]">
+          {err}
+        </div>
+      )}
+
       {/* 3. Aksi Cepat (5 round quick action buttons in Pastel Blue #A9D3C5) */}
       <Rise delay={0.05}>
-        <section className="rounded-3xl bg-white p-4 shadow-sm border border-[#307B8E]/10">
+        <section className="card">
           <div className="flex items-center justify-between mb-3 px-1">
-            <h2 className="text-sm font-black text-[#103A57]">Aksi Cepat</h2>
-            <Link href="/lainnya" className="text-xs font-bold text-[#307B8E] hover:underline">
+            <h2 className="card-title">Aksi Cepat</h2>
+            <Link href="/lainnya" className="card-link">
               Lihat Semua
             </Link>
           </div>
@@ -460,7 +445,7 @@ export default function Kasir() {
               onClick={() => setShowCatatModal(true)}
               className="flex flex-col items-center gap-1.5 group"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#A9D3C5] text-[#103A57] font-black group-hover:scale-105 transition shadow-sm">
+              <span className="ico-tile group-active:scale-95 transition">
                 <Plus size={20} strokeWidth={2.5} />
               </span>
               <span className="text-[11px] font-bold text-[#103A57]">Jual</span>
@@ -472,7 +457,7 @@ export default function Kasir() {
               onClick={() => setShowCatatModal(true)}
               className="flex flex-col items-center gap-1.5 group"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#A9D3C5] text-[#103A57] font-black group-hover:scale-105 transition shadow-sm">
+              <span className="ico-tile group-active:scale-95 transition">
                 <Minus size={20} strokeWidth={2.5} />
               </span>
               <span className="text-[11px] font-bold text-[#103A57]">Keluar</span>
@@ -484,7 +469,7 @@ export default function Kasir() {
               onClick={() => setShowQrisPreview(true)}
               className="flex flex-col items-center gap-1.5 group"
             >
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#A9D3C5] text-[#103A57] group-hover:scale-105 transition shadow-sm">
+              <span className="ico-tile group-active:scale-95 transition">
                 <QrCode size={19} strokeWidth={2.2} />
               </span>
               <span className="text-[11px] font-bold text-[#103A57]">QRIS</span>
@@ -492,7 +477,7 @@ export default function Kasir() {
 
             {/* 4. Stok */}
             <Link href="/inventaris" className="flex flex-col items-center gap-1.5 group">
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#A9D3C5] text-[#103A57] group-hover:scale-105 transition shadow-sm">
+              <span className="ico-tile group-active:scale-95 transition">
                 <Package size={19} strokeWidth={2.2} />
               </span>
               <span className="text-[11px] font-bold text-[#103A57]">Stok</span>
@@ -500,7 +485,7 @@ export default function Kasir() {
 
             {/* 5. Harga */}
             <Link href="/harga" className="flex flex-col items-center gap-1.5 group">
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#A9D3C5] text-[#103A57] group-hover:scale-105 transition shadow-sm">
+              <span className="ico-tile group-active:scale-95 transition">
                 <TrendingUp size={19} strokeWidth={2.2} />
               </span>
               <span className="text-[11px] font-bold text-[#103A57]">Harga</span>
@@ -513,11 +498,11 @@ export default function Kasir() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* 4. Pengingat Usaha (Business Alerts) */}
         <Rise delay={0.08} className="h-full">
-          <section className="rounded-3xl bg-white p-4 shadow-sm border border-[#307B8E]/10 space-y-3 h-full">
-            <h2 className="text-sm font-black text-[#103A57]">Pengingat Usaha</h2>
+          <section className="card space-y-3 h-full">
+            <h2 className="card-title">Pengingat Usaha</h2>
 
             {/* Alert 1: Low stock alert */}
-            <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
+            <div className="flex items-start gap-3 rounded-2xl bg-[#EEF5F1] p-3.5">
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-800">
                 <AlertTriangle size={18} />
               </span>
@@ -536,7 +521,7 @@ export default function Kasir() {
             </div>
 
             {/* Alert 2: Balik modal */}
-            <div className="flex items-start gap-3 rounded-2xl bg-[#CEE5D6]/35 p-3.5 border border-[#307B8E]/15">
+            <div className="flex items-start gap-3 rounded-2xl bg-[#EEF5F1] p-3.5">
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#A9D3C5] text-[#103A57]">
                 <Clock size={18} />
               </span>
@@ -554,7 +539,7 @@ export default function Kasir() {
 
         {/* 5. Misi Hari Ini (Teal Blue Card #307B8E) */}
         <Rise delay={0.1} className="h-full">
-          <section className="rounded-3xl bg-[#307B8E] p-5 text-white shadow-md border border-white/20 h-full flex flex-col justify-between">
+          <section className="rounded-[18px] bg-[#307B8E] p-5 text-white h-full flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black tracking-wide">
@@ -584,10 +569,10 @@ export default function Kasir() {
 
       {/* 6. Katalog POS & Keranjang Kasir (Expandable / Direct Access) */}
       <Rise delay={0.12}>
-        <section className="rounded-3xl bg-white p-4 shadow-sm border border-[#307B8E]/10">
+        <section className="card">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
-              <h2 className="text-sm font-black text-[#103A57]">Katalog Kasir</h2>
+              <h2 className="card-title">Katalog Kasir</h2>
               <p className="text-[11px] font-semibold text-[#307B8E]">Pilih produk untuk dicatat langsung</p>
             </div>
             <button
@@ -630,7 +615,7 @@ export default function Kasir() {
                     key={p.id}
                     type="button"
                     onClick={() => pilihProduk(p)}
-                    className="flex flex-col justify-between rounded-2xl bg-[#CEE5D6]/30 p-3 text-left border border-[#307B8E]/15 hover:bg-[#CEE5D6]/50 active:scale-95 transition"
+                    className="flex flex-col justify-between rounded-2xl bg-[#EEF5F1] p-3 text-left hover:bg-[#E3F0EA] active:scale-95 transition"
                   >
                     <b className="text-xs font-black text-[#103A57] truncate">{p.nama}</b>
                     <span className="mt-2 text-xs font-extrabold text-[#307B8E] tabular-nums">
@@ -670,7 +655,7 @@ export default function Kasir() {
       <AnimatePresence>
         {showQrisPreview && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#103A57]/60 backdrop-blur-sm p-4">
-            <div className="w-full max-w-sm rounded-3xl bg-white p-5 text-center shadow-2xl border border-slate-100">
+            <div className="w-full max-w-sm rounded-[22px] bg-white p-5 text-center shadow-2xl">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <span className="text-xs font-black text-[#103A57]">QRIS TOKO · CAVA</span>
                 <button onClick={() => setShowQrisPreview(false)} className="text-slate-400 hover:text-slate-700">✕</button>

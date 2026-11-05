@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#CEE5D6] text-[#103A57] antialiased">
+      <body className="bg-[#EEF5F1] text-[#103A57] antialiased">
         <CavaSplash />
         <BusinessProfileGate />
         {children}
